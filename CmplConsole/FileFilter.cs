@@ -15,7 +15,25 @@ namespace CmplConsole
             foreach (string file in files)
             {
                 string f = Path.GetFileNameWithoutExtension(file);
-                if (f.StartsWith("SG_REF"))
+                if (f.StartsWith("SG_QUAL_"))
+                {
+                    var s2 = file.Split('_');
+                    var s3 = String.Join("_", s2.Skip(1).Take(3));
+                    int place = s3.LastIndexOf("_");
+                    string result = s3.Remove(place, "_".Length).Insert(place, "-");
+                    Console.WriteLine(result);
+                }
+                else if (f.StartsWith("SG_REF") || f.StartsWith("SG_QUAL") || f.StartsWith("SG_INTER") || f.StartsWith("SG_RNT"))
+                {
+                    var s2 = file.Split('_');
+                    Console.WriteLine(String.Join("_", s2.Skip(1).Take(2)));
+                }
+                else if (f.StartsWith("SG_PQ"))
+                {
+                    var s2 = file.Split('_');
+                    Console.WriteLine(String.Join("_", s2.Skip(1).Take(3)));
+                }
+                else if (f.StartsWith("SG_RRC_"))
                 {
                     var s2 = file.Split('_');
                     Console.WriteLine(String.Join("_", s2.Skip(1).Take(2)));
@@ -27,14 +45,14 @@ namespace CmplConsole
                 }
                 else if (f.StartsWith("SG_"))
                 {
-                    var s2 = file.Split('_');  
+                    var s2 = file.Split('_');
                     Console.WriteLine(String.Join("_", s2.Skip(1).Take(1)));
-                }else
+                }
+                else
                 {
-                    Console.WriteLine("File not found");
+                    Console.WriteLine("Sob of file {0} not found", f);
                 }
             }
-
             Console.ReadKey();
         }
     }
