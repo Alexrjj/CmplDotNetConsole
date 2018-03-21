@@ -18,26 +18,23 @@ namespace CmplConsole
                 if (f.StartsWith("SG_REF"))
                 {
                     var s2 = file.Split('_');
-                    Console.WriteLine(Path.GetFileNameWithoutExtension(String.Join("_", s2.Skip(1).Take(2))));
+                    Console.WriteLine(String.Join("_", s2.Skip(1).Take(2)));
                 }
                 else if (f.StartsWith("SG_RRC"))
                 {
                     var s2 = file.Split('_');
-                    Console.WriteLine(Path.GetFileNameWithoutExtension(String.Join("_", s2.Skip(1).Take(2)).Replace("_", "-")));
+                    Console.WriteLine(String.Join("_", s2.Skip(1).Take(2)).Replace("_", "-"));
                 }
                 else if (f.StartsWith("SG_"))
                 {
                     var s2 = file.Split('_');  
-                    Console.WriteLine(Path.GetFileNameWithoutExtension(String.Join("_", s2.Skip(1).Take(1))));
-                }
-                
-                else
+                    Console.WriteLine(String.Join("_", s2.Skip(1).Take(1)));
+                }else
                 {
                     Console.WriteLine("File not found");
                 }
             }
-                
-                
+
             Console.ReadKey();
         }
     }
