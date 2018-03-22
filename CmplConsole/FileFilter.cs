@@ -19,9 +19,15 @@ namespace CmplConsole
                 {
                     var s2 = file.Split('_');
                     var s3 = String.Join("_", s2.Skip(1).Take(3));
-                    int place = s3.LastIndexOf("_");
-                    string result = s3.Remove(place, "_".Length).Insert(place, "-");
-                    Console.WriteLine(result);
+                    int lastIndex = s3.LastIndexOf('_');
+                    if (Char.IsDigit(s3[lastIndex + 1]))
+                    {
+                        string result = s3.Remove(lastIndex, "_".Length).Insert(lastIndex, "-");
+                        Console.WriteLine(result);
+                    } else
+                    {
+                        Console.WriteLine(String.Join("_", s2.Skip(1).Take(2)));
+                    }
                 }
                 else if (f.StartsWith("SG_REF") || f.StartsWith("SG_QUAL") || f.StartsWith("SG_INTER") || f.StartsWith("SG_RNT"))
                 {
