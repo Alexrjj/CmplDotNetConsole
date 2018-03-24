@@ -201,6 +201,7 @@ namespace CmplConsole
                                 using (StreamWriter sw = File.AppendText(log))
                                 {
                                     sw.WriteLine(f);
+                                    sw.Close();
                                 }
                             }
                         }
