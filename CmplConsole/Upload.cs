@@ -24,7 +24,6 @@ namespace CmplConsole
                 ChromeOptions options = new ChromeOptions();
                 //options.AddArgument("--headless");
                 options.AddArgument("--window-size= 1600x900");
-                IWebDriver driver = new ChromeDriver(options);
             // ----  Chrome Settings ---- //
 
             //Informações de credenciais para login no GOMNET
