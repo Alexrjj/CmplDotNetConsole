@@ -64,7 +64,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Upload.cs" />
+    <Compile Include="ExtraiSobStatus.cs" />
+    <Content Include="Upload.cs" />
     <Content Include="ExcelWriter.cs" />
     <Content Include="FileFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
