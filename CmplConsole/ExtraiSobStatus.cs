@@ -1,11 +1,9 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using Excel = NetOffice.ExcelApi;
 using System.Windows.Forms;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 
 namespace CmplConsole
 {
@@ -71,19 +69,17 @@ namespace CmplConsole
                     {
                         var numSobArquivo = driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_Gridview_GomNet1']/tbody/tr[2]/td[8]")).Text;
                         var numStatusArquivo = driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_Gridview_GomNet1']/tbody/tr[2]/td[3]")).Text;
-                        //if (!File.Exists(log))
-                        //{
-                            using (StreamWriter sw = File.AppendText(log))
-                            {
-                                sw.WriteLine(numSobArquivo + " " + numStatusArquivo);
-                            }
-                        //}
+                        
+                        using (StreamWriter sw = File.AppendText(log))
+                        {
+                            sw.WriteLine(numSobArquivo + " " + numStatusArquivo);
+                        }
+                        
                     }
                 }
                 catch (NoSuchElementException)
                 {
                     Console.WriteLine(line + " not found.");
-                    //file.Close();
                     continue;
                 }
             }
