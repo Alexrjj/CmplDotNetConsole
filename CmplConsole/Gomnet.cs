@@ -47,7 +47,7 @@ namespace CmplConsole
             //Inicia o webdriver do Chrome
             try
             {
-                ChromeSettings.driver.Navigate().GoToUrl(Gomnet.url);
+                Chrome.driver.Navigate().GoToUrl(Gomnet.url);
             }
             catch (System.NullReferenceException) // Para o script, caso falhe a opção escolhida no ChromeInitializer
             {
@@ -55,11 +55,11 @@ namespace CmplConsole
             }
 
             //Loga no sistema
-            IWebElement usrname = ChromeSettings.driver.FindElement(By.Id("txtBoxLogin"));
-            IWebElement usrpass = ChromeSettings.driver.FindElement(By.Id("txtBoxSenha"));
+            IWebElement usrname = Chrome.driver.FindElement(By.Id("txtBoxLogin"));
+            IWebElement usrpass = Chrome.driver.FindElement(By.Id("txtBoxSenha"));
             usrname.SendKeys(login);
             usrpass.SendKeys(senha);
-            ChromeSettings.driver.FindElement(By.Id("ImageButton_Login")).Click();
+            Chrome.driver.FindElement(By.Id("ImageButton_Login")).Click();
         }
     }
 }

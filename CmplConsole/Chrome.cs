@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace CmplConsole
 {
-    public class ChromeSettings
+    public class Chrome
     {
         public static ChromeOptions options = new ChromeOptions();
         public static IWebDriver driver;
@@ -34,12 +34,12 @@ namespace CmplConsole
             mode = Convert.ToChar(Console.ReadLine());
             if (mode == 'y')
             {
-                ChromeSettings.ChromeHeadless();
+                Chrome.ChromeHeadless();
                 driver = new ChromeDriver(options);
             }
             else if (mode == 'n')
             {
-                ChromeSettings.ChromeNonHeadless();
+                Chrome.ChromeNonHeadless();
                 driver = new ChromeDriver(options);
             } else
             {
