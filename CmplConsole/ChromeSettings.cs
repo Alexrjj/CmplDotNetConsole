@@ -8,7 +8,7 @@ namespace CmplConsole
 {
     public class ChromeSettings
     {
-        public static ChromeOptions options;
+        public static ChromeOptions options = new ChromeOptions();
         public static IWebDriver driver;
 
         public static void ChromeNonHeadless()
@@ -35,12 +35,12 @@ namespace CmplConsole
             if (mode == 'y')
             {
                 ChromeSettings.ChromeHeadless();
-                driver = new ChromeDriver(ChromeSettings.options);
+                driver = new ChromeDriver(options);
             }
             else if (mode == 'n')
             {
                 ChromeSettings.ChromeNonHeadless();
-                driver = new ChromeDriver(ChromeSettings.options);
+                driver = new ChromeDriver(options);
             } else
             {
                 Console.WriteLine("Invalid option.");
