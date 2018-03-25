@@ -9,40 +9,14 @@ namespace CmplConsole
     {
         public static void ExtrairSobsStatus()
         {
-            //Variáveis
-            string url = "http://gomnet.ampla.com/";
-            string urlConsulta = "http://gomnet.ampla.com/ConsultaObra.aspx";
-            string folder = Path.GetDirectoryName(Application.ExecutablePath);
-            string sobs = folder + @"\sobs.txt";
-            string log = folder + @"\Sobs&Status.txt";
-
+            Gomnet.GomnetSettings();
             ChromeSettings.ChromeInitializer();
+            Gomnet.LogaGomnet();
 
-            ExcelCredentials.LoginGomnet();
-            // Fecha o Excel e o processo .exe
-            ExcelCredentials.excel.Quit();
-            ExcelCredentials.excel.Dispose();
-
-            //Inicia o webdriver do Chrome
-            try
-            {
-                ChromeSettings.driver.Navigate().GoToUrl(url);
-            } catch (System.NullReferenceException) // Para o script, caso falhe a opção escolhida no ChromeInitializer
-            {
-                return;
-            }
-            
-            //Loga no sistema
-            IWebElement usrname = ChromeSettings.driver.FindElement(By.Id("txtBoxLogin"));
-            IWebElement usrpass = ChromeSettings.driver.FindElement(By.Id("txtBoxSenha"));
-            usrname.SendKeys(ExcelCredentials.login);
-            usrpass.SendKeys(ExcelCredentials.senha);
-            ChromeSettings.driver.FindElement(By.Id("ImageButton_Login")).Click();
-
-            ChromeSettings.driver.Navigate().GoToUrl(urlConsulta);
+            ChromeSettings.driver.Navigate().GoToUrl(Gomnet.urlConsulta);
 
             string line;
-            StreamReader file = new StreamReader(sobs);
+            StreamReader file = new StreamReader(Gomnet.sobs);
             while ((line = file.ReadLine()) != null)
             {
                 ChromeSettings.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_TextBox_NumSOB")).Clear();
@@ -58,7 +32,7 @@ namespace CmplConsole
                         var numSobArquivo = ChromeSettings.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_Gridview_GomNet1']/tbody/tr[2]/td[8]")).Text;
                         var numStatusArquivo = ChromeSettings.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_Gridview_GomNet1']/tbody/tr[2]/td[3]")).Text;
                         
-                        using (StreamWriter sw = File.AppendText(log))
+                        using (StreamWriter sw = File.AppendText(Gomnet.logSobsStatus))
                         {
                             sw.WriteLine(numSobArquivo + " " + numStatusArquivo);
                         }
