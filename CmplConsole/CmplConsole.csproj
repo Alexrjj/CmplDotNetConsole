@@ -64,10 +64,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtraiSobStatus.cs" />
-    <Content Include="Upload.cs" />
+    <Compile Include="ChromeSettings.cs" />
+    <Compile Include="ExcelCredentials.cs" />
+    <Compile Include="SobStatus.cs" />
+    <Compile Include="Upload.cs" />
     <Content Include="ExcelWriter.cs" />
     <Content Include="FileFilter.cs" />
+    <Compile Include="Principal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
