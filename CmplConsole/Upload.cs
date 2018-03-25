@@ -10,9 +10,9 @@ using OpenQA.Selenium.Support.UI;
 namespace CmplConsole
 {
     
-    class Upload
+    public class Upload
     {
-        static void Main(string[] args)
+        public static void UploadArquivos()
         {
             //Variáveis
             string url = "http://gomnet.ampla.com/";
