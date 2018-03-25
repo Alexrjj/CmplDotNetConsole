@@ -65,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChromeSettings.cs" />
-    <Compile Include="ExcelCredentials.cs" />
+    <Compile Include="Gomnet.cs" />
     <Compile Include="SobStatus.cs" />
     <Compile Include="Upload.cs" />
     <Content Include="ExcelWriter.cs" />
