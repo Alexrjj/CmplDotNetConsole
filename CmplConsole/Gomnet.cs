@@ -21,7 +21,7 @@ namespace CmplConsole
         public static string login;
         public static string senha;
 
-        public static void GomnetSettings()
+        public static void Settings()
         {
             url = "http://gomnet.ampla.com/";
             urlConsulta = "http://gomnet.ampla.com/ConsultaObra.aspx";
@@ -30,7 +30,7 @@ namespace CmplConsole
             logSobsStatus = folder + @"\Sobs&Status.txt";
         }
 
-        public static void LogaGomnet()
+        public static void Login()
         {
             //Informações de credenciais para login no GOMNET
             string credenciais = @"C:\gomnet.xlsx";

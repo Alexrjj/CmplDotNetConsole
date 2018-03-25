@@ -9,9 +9,9 @@ namespace CmplConsole
     {
         public static void ExtrairSobsStatus()
         {
-            Gomnet.GomnetSettings();
-            Chrome.ChromeInitializer();
-            Gomnet.LogaGomnet();
+            Gomnet.Settings();
+            Chrome.Initializer();
+            Gomnet.Login();
 
             Chrome.driver.Navigate().GoToUrl(Gomnet.urlConsulta);
 
