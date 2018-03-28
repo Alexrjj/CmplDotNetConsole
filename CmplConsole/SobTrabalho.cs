@@ -16,7 +16,7 @@ namespace CmplConsole
             Chrome.driver.Navigate().GoToUrl(Gomnet.urlConsulta);
 
             string line;
-            StreamReader file = new StreamReader(Gomnet.sobs);
+            StreamReader file = new StreamReader(Gomnet.InSobTrab);
             while ((line = file.ReadLine()) != null)
             {
                 Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_TextBox_NumSOB")).Clear();
@@ -32,7 +32,7 @@ namespace CmplConsole
                         var numSobArquivo = Chrome.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_Gridview_GomNet1']/tbody/tr[2]/td[8]")).Text;
                         var numTrabArquivo = Chrome.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_Gridview_GomNet1']/tbody/tr[2]/td[4]")).Text;
 
-                        using (StreamWriter sw = File.AppendText(Gomnet.logSobTrab))
+                        using (StreamWriter sw = File.AppendText(Gomnet.OutSobTrab))
                         {
                             sw.WriteLine(numSobArquivo + " " + numTrabArquivo);
                         }
