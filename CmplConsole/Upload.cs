@@ -162,14 +162,12 @@ namespace CmplConsole
                         }
                         catch (NoSuchElementException)
                         {
-                            if (!File.Exists(Gomnet.logUpload))
+                            using (StreamWriter sw = File.AppendText(Gomnet.OutUpload))
                             {
-                                using (StreamWriter sw = File.AppendText(Gomnet.logUpload))
-                                {
-                                    sw.WriteLine(f);
-                                    sw.Close();
-                                }
+                                sw.WriteLine(f);
+                                sw.Close();
                             }
+                            
                         }
                     }
                 }
