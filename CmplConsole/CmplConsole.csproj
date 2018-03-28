@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Chrome.cs" />
     <Compile Include="Gomnet.cs" />
+    <Compile Include="GoogleForms.cs" />
     <Compile Include="SobStatus.cs" />
     <Compile Include="Upload.cs" />
     <Content Include="ExcelWriter.cs" />
