@@ -23,6 +23,7 @@ namespace CmplConsole
         public static string googleForm;
         public static string urlUpload;
         public static string logUpload;
+        public static string logSobTrab;
 
         public static void Settings()
         {
@@ -33,8 +34,8 @@ namespace CmplConsole
             folder = Path.GetDirectoryName(Application.ExecutablePath);
             sobs = folder + @"\sobs.txt";
             logSobsStatus = folder + @"\LogSobs&Status.txt";
+            logSobTrab = folder + @"\LogSobTrab.txt";
             logUpload = folder + @"\LogUpload.txt";
-
         }
 
         public static void Login()
