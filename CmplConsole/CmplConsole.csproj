@@ -69,7 +69,7 @@
     <Compile Include="GoogleForms.cs" />
     <Compile Include="SobStatus.cs" />
     <Compile Include="Upload.cs" />
-    <Content Include="ExcelWriter.cs" />
+    <Compile Include="ExcelReader.cs" />
     <Content Include="FileFilter.cs" />
     <Compile Include="Principal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
