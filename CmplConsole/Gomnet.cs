@@ -14,16 +14,18 @@ namespace CmplConsole
     {
         public static string url;
         public static string urlConsulta;
+        public static string urlUpload;
         public static string folder;
-        public static string sobs;
-        public static string logSobsStatus;
         public static Excel.Application excel;
         public static string login;
         public static string senha;
         public static string googleForm;
-        public static string urlUpload;
-        public static string logUpload;
-        public static string logSobTrab;
+        public static string InSobStatus;
+        public static string InSobTrab;
+        public static string OutUpload;
+        public static string OutSobTrab;
+        public static string OutSobStatus;
+
 
         public static void Settings()
         {
@@ -32,10 +34,11 @@ namespace CmplConsole
             urlUpload = "http://gomnet.ampla.com/Upload.aspx?numsob=";
             googleForm = "https://docs.google.com/forms/d/e/1FAIpQLSdqi7NxRSzKM0M3-ZQn5Fpn6rKriKJnw_0EPnlD3iScx18yXg/viewform";
             folder = Path.GetDirectoryName(Application.ExecutablePath);
-            sobs = folder + @"\sobs.txt";
-            logSobsStatus = folder + @"\LogSobs&Status.txt";
-            logSobTrab = folder + @"\LogSobTrab.txt";
-            logUpload = folder + @"\LogUpload.txt";
+            InSobStatus = folder + @"\InSobStatus.txt";
+            InSobTrab = folder + @"\InSobTrab.txt";
+            OutSobStatus = folder + @"\OutSobStatus.txt";
+            OutSobTrab = folder + @"\OutSobTrab.txt";
+            OutUpload = folder + @"\OutUpload.txt";
         }
 
         public static void Login()
