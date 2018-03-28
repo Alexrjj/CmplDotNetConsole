@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace CmplConsole
 {
-    class ExcelWriter
+    class ExcelReader
     {
-        static void Main(string[] args)
+        public static void Reader()
         {
             string planilha = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"\sobs.xlsm";
             Excel.Application excel = new Excel.Application();
