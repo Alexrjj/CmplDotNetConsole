@@ -12,7 +12,7 @@ namespace CmplConsole
 {
     class ExcelReader
     {
-        public static void Reader()
+        public static void LerBaremoQtd()
         {
             string planilha = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"\sobs.xlsm";
             Excel.Application excel = new Excel.Application();
