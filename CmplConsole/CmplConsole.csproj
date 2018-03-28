@@ -68,6 +68,7 @@
     <Compile Include="Gomnet.cs" />
     <Compile Include="GoogleForms.cs" />
     <Compile Include="SobStatus.cs" />
+    <Compile Include="SobTrabalho.cs" />
     <Compile Include="Upload.cs" />
     <Compile Include="ExcelReader.cs" />
     <Content Include="FileFilter.cs" />
