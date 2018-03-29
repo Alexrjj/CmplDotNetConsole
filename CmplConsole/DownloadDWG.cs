@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using OpenQA.Selenium;
 
 namespace CmplConsole
 {
-    class Download
+    class DownloadDWG
     {
         public static void DWG()
         {
@@ -37,10 +32,8 @@ namespace CmplConsole
                         }
                     }
                     catch (NoSuchElementException)
-                    {
-                        
+                    {   
                     }
-
                     try
                     {
                         var rev_08 = Chrome.driver.FindElement(By.PartialLinkText("REV.08.dwg"));
@@ -53,9 +46,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev_07 = Chrome.driver.FindElement(By.PartialLinkText("REV.07.dwg"));
@@ -68,9 +59,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev_06 = Chrome.driver.FindElement(By.PartialLinkText("REV.06.dwg"));
@@ -83,9 +72,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev_05 = Chrome.driver.FindElement(By.PartialLinkText("REV.05.dwg"));
@@ -98,9 +85,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev_04 = Chrome.driver.FindElement(By.PartialLinkText("REV.04.dwg"));
@@ -113,9 +98,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev_03 = Chrome.driver.FindElement(By.PartialLinkText("REV.03.dwg"));
@@ -128,9 +111,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev_02 = Chrome.driver.FindElement(By.PartialLinkText("REV.02.dwg"));
@@ -143,9 +124,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev_01 = Chrome.driver.FindElement(By.PartialLinkText("REV.01.dwg"));
@@ -158,9 +137,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra9 = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA_09.dwg"));
@@ -173,9 +150,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra8 = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA_08.dwg"));
@@ -188,9 +163,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra7 = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA_07.dwg"));
@@ -203,9 +176,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra6 = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA_06.dwg"));
@@ -218,9 +189,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra5 = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA_05.dwg"));
@@ -233,9 +202,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra4 = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA_04.dwg"));
@@ -248,9 +215,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra3 = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA_03.dwg"));
@@ -263,9 +228,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra2 = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA_02.dwg"));
@@ -278,9 +241,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra1 = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA_01.dwg"));
@@ -293,9 +254,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var revObra = Chrome.driver.FindElement(By.PartialLinkText("REVOBRA.dwg"));
@@ -308,9 +267,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev9 = Chrome.driver.FindElement(By.PartialLinkText("REV09.dwg"));
@@ -323,9 +280,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev8 = Chrome.driver.FindElement(By.PartialLinkText("REV08.dwg"));
@@ -338,9 +293,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev7 = Chrome.driver.FindElement(By.PartialLinkText("REV07.dwg"));
@@ -353,9 +306,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev6 = Chrome.driver.FindElement(By.PartialLinkText("REV06.dwg"));
@@ -368,9 +319,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev5 = Chrome.driver.FindElement(By.PartialLinkText("REV05.dwg"));
@@ -383,9 +332,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev4 = Chrome.driver.FindElement(By.PartialLinkText("REV04.dwg"));
@@ -398,9 +345,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev3 = Chrome.driver.FindElement(By.PartialLinkText("REV03.dwg"));
@@ -413,9 +358,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev2 = Chrome.driver.FindElement(By.PartialLinkText("REV02.dwg"));
@@ -428,9 +371,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var rev1 = Chrome.driver.FindElement(By.PartialLinkText("REV01.dwg"));
@@ -443,9 +384,7 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
-
                     try
                     {
                         var dwg = Chrome.driver.FindElement(By.PartialLinkText("dwg"));
@@ -458,7 +397,6 @@ namespace CmplConsole
                     }
                     catch (NoSuchElementException)
                     {
-
                     }
                 }
                 catch (NoSuchElementException)
@@ -469,9 +407,8 @@ namespace CmplConsole
                     //    sw.WriteLine(line);
                     //    sw.Close();
                     //}
-                    Console.WriteLine("{0} not found.", line); // Não funcional
+                    //Console.WriteLine("{0} not found.", line); // Não funcional
                 }
-                    
             }
             Console.WriteLine("End of execution.");
         }
