@@ -18,7 +18,6 @@ namespace CmplConsole
             while ((line = file.ReadLine()) != null)
             {
                 Chrome.driver.Navigate().GoToUrl(Gomnet.urlUpload + line);
-                Chrome.driver.SwitchTo().Window(Chrome.driver.WindowHandles.Last());
                 try //Busca pela versão mais atual do DWG da Sob
                 {
                     try
