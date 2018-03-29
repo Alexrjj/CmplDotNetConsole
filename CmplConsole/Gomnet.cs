@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = NetOffice.ExcelApi;
@@ -22,9 +23,12 @@ namespace CmplConsole
         public static string googleForm;
         public static string InSobStatus;
         public static string InSobTrab;
+        public static string InSobDWG;
         public static string OutUpload;
         public static string OutSobTrab;
         public static string OutSobStatus;
+        public static string OutSobDWG;
+        
 
 
         public static void Settings()
@@ -36,9 +40,11 @@ namespace CmplConsole
             folder = Path.GetDirectoryName(Application.ExecutablePath);
             InSobStatus = folder + @"\InSobStatus.txt";
             InSobTrab = folder + @"\InSobTrab.txt";
+            InSobDWG = folder + @"\InSobDWG.txt";
             OutSobStatus = folder + @"\OutSobStatus.txt";
             OutSobTrab = folder + @"\OutSobTrab.txt";
             OutUpload = folder + @"\OutUpload.txt";
+            OutSobDWG = folder + @"\OutSobDWG.txt";
         }
 
         public static void Login()
@@ -72,6 +78,14 @@ namespace CmplConsole
             usrname.SendKeys(login);
             usrpass.SendKeys(senha);
             Chrome.driver.FindElement(By.Id("ImageButton_Login")).Click();
+        }
+
+        public static void FechaJanela()
+        {
+            Chrome.driver.SwitchTo().Window(Chrome.driver.WindowHandles.Last());
+            Chrome.driver.Close();
+            Chrome.driver.SwitchTo().Window(Chrome.driver.WindowHandles.First());
+            Thread.Sleep(5000);
         }
     }
 }
