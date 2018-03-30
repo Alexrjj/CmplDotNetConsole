@@ -399,13 +399,6 @@ namespace CmplConsole
                 }
                 catch (NoSuchElementException)
                 {
-                    // Não funcional
-                    //using (StreamWriter sw = File.AppendText(Gomnet.OutSobDWG))
-                    //{
-                    //    sw.WriteLine(line);
-                    //    sw.Close();
-                    //}
-                    //Console.WriteLine("{0} not found.", line); // Não funcional
                 }
             }
             Console.WriteLine("End of execution.");
