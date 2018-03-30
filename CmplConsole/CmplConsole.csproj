@@ -65,8 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Chrome.cs" />
-    <Compile Include="DownloadDWG.cs" />
-    <Compile Include="DownloadSGD.cs" />
+    <Compile Include="Download.cs" />
     <Compile Include="Gomnet.cs" />
     <Compile Include="GoogleForms.cs" />
     <Compile Include="SobStatus.cs" />
