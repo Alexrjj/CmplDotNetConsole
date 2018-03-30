@@ -12,9 +12,11 @@ namespace CmplConsole
             Chrome.Initializer();
             Gomnet.Login();
 
-            string month = DateTime.Now.ToString("MM");
+            //string month = DateTime.Now.ToString("MM");
+            Console.Write("Month Value: ");
+            string month = Console.ReadLine();
             string line;
-            StreamReader file = new StreamReader(Gomnet.InSobDWG);
+            StreamReader file = new StreamReader(Gomnet.InSobSGD);
             while ((line = file.ReadLine()) != null)
             {
                 Chrome.driver.Navigate().GoToUrl(Gomnet.urlUpload + line);
@@ -22,14 +24,22 @@ namespace CmplConsole
                 {
                     try
                     {
-                        var pdfs = Chrome.driver.FindElements(By.PartialLinkText("'-' " + month + " '-18'"));
-                        foreach(int x in pdfs){
-                            Chrome.driver.FindElements(By.PartialLinkText("'-' " + month + " '-18'"))[pdf].Click();
+                        var pdfs = Chrome.driver.FindElements(By.PartialLinkText("-" + month + "-18")).Count;
+                        for (int pdf = 0; pdf < pdfs; pdf++)
+                        {
+                            Chrome.driver.FindElements(By.PartialLinkText("-" + month + "-18"))[pdf].Click();
+                            Gomnet.FechaJanela();
                         }
                     }
+                    catch (NoSuchElementException)
+                    {
+                    }
+                }
+                catch (NoSuchElementException)
+                {
                 }
             }
+            Console.Write("End of execution.");
         }
     }
 }
-
