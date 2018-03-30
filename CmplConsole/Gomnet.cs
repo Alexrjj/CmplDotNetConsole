@@ -1,11 +1,7 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Excel = NetOffice.ExcelApi;
 
@@ -24,12 +20,10 @@ namespace CmplConsole
         public static string InSobStatus;
         public static string InSobTrab;
         public static string InSobDWG;
+        public static string InSobSGD;
         public static string OutUpload;
         public static string OutSobTrab;
         public static string OutSobStatus;
-        public static string OutSobDWG;
-        
-
 
         public static void Settings()
         {
@@ -41,10 +35,10 @@ namespace CmplConsole
             InSobStatus = folder + @"\InSobStatus.txt";
             InSobTrab = folder + @"\InSobTrab.txt";
             InSobDWG = folder + @"\InSobDWG.txt";
+            InSobSGD = folder + @"\InSobSGD.txt";
             OutSobStatus = folder + @"\OutSobStatus.txt";
             OutSobTrab = folder + @"\OutSobTrab.txt";
             OutUpload = folder + @"\OutUpload.txt";
-            OutSobDWG = folder + @"\OutSobDWG.txt";
         }
 
         public static void Login()
