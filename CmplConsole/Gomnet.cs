@@ -9,7 +9,7 @@ namespace CmplConsole
 {
     public class Gomnet
     {
-        public static string url;
+        public static string urlLogin;
         public static string urlConsulta;
         public static string urlUpload;
         public static string folder;
@@ -27,7 +27,7 @@ namespace CmplConsole
 
         public static void Settings()
         {
-            url = "http://gomnet.ampla.com/";
+            urlLogin = "http://gomnet.ampla.com/";
             urlConsulta = "http://gomnet.ampla.com/ConsultaObra.aspx";
             urlUpload = "http://gomnet.ampla.com/Upload.aspx?numsob=";
             googleForm = "https://docs.google.com/forms/d/e/1FAIpQLSdqi7NxRSzKM0M3-ZQn5Fpn6rKriKJnw_0EPnlD3iScx18yXg/viewform";
@@ -59,9 +59,9 @@ namespace CmplConsole
             //Inicia o webdriver do Chrome
             try
             {
-                Chrome.driver.Navigate().GoToUrl(Gomnet.url);
+                Chrome.driver.Navigate().GoToUrl(Gomnet.urlLogin);
             }
-            catch (System.NullReferenceException) // Para o script, caso falhe a opção escolhida no ChromeInitializer
+            catch (System.NullReferenceException) // Pára o script, caso falhe a opção escolhida no ChromeInitializer
             {
                 return;
             }
@@ -72,6 +72,8 @@ namespace CmplConsole
             usrname.SendKeys(login);
             usrpass.SendKeys(senha);
             Chrome.driver.FindElement(By.Id("ImageButton_Login")).Click();
+            Chrome.driver.FindElement(By.XPath("//*[@id='ListBox_Perfil']/option[1]")).Click();
+            Chrome.driver.FindElement(By.XPath("//*[@id='ImageButton_Logar']")).Click();
         }
 
         public static void FechaJanela()
