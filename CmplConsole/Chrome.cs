@@ -3,6 +3,7 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.IO;
 using System.Windows.Forms;
+using Actions = OpenQA.Selenium.Interactions.Actions;
 
 namespace CmplConsole
 {
@@ -10,6 +11,7 @@ namespace CmplConsole
     {
         public static ChromeOptions options = new ChromeOptions();
         public static IWebDriver driver;
+        public static Actions action;
 
         public static void NonHeadless()
         {
@@ -36,11 +38,13 @@ namespace CmplConsole
             {
                 Chrome.Headless();
                 driver = new ChromeDriver(options);
-            }
+                Actions action = new Actions(driver);
+    }
             else if (mode == 'n')
             {
                 Chrome.NonHeadless();
                 driver = new ChromeDriver(options);
+                Actions action = new Actions(driver);
             } else
             {
                 Console.WriteLine("Invalid option.");
