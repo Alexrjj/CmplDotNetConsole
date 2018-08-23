@@ -9,7 +9,7 @@ namespace CmplConsole
 
     public class Upload
     {
-        public static void UploadArquivos()
+        public static void Arquivos()
         {
 
             Gomnet.Settings();
@@ -174,6 +174,11 @@ namespace CmplConsole
             }
             //driver.Close();
             Console.ReadKey();
+        }
+
+        public static void AsBuilt()
+        {
+            //TODO: Implementar upload de arquivos As Built apenas no formato DWG.
         }
     }
 }
