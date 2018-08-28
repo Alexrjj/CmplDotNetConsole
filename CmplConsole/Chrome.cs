@@ -31,24 +31,33 @@ namespace CmplConsole
 
         public static void Initializer()
         {
-            char mode = '\0';
-            Console.WriteLine("Headless Mode? (y/n)");
-            mode = Convert.ToChar(Console.ReadLine());
-            if (mode == 'y')
+            Console.WriteLine("\nHeadless Mode? (y/n)");
+            var mode = Console.ReadKey().KeyChar;
+            switch (mode)
             {
-                Chrome.Headless();
-                driver = new ChromeDriver(options);
-                Actions action = new Actions(driver);
-    }
-            else if (mode == 'n')
-            {
-                Chrome.NonHeadless();
-                driver = new ChromeDriver(options);
-                Actions action = new Actions(driver);
-            } else
-            {
-                Console.WriteLine("Invalid option.");
-                Console.ReadKey();
+                case 'y':
+                case 'Y':
+                    {
+                        Chrome.Headless();
+                        driver = new ChromeDriver(options);
+                        Actions action = new Actions(driver);
+                        break;
+                    }
+                case 'n':
+                case 'N':
+                    {
+                        Chrome.NonHeadless();
+                        driver = new ChromeDriver(options);
+                        Actions action = new Actions(driver);
+                        break;
+                    }
+                default:
+                    {
+                        Console.WriteLine("\nInvalid Option.");
+                        Console.WriteLine("\nPress any key to finish.");
+                        Console.ReadKey();
+                        break;
+                    }
             }
         }
     }
