@@ -6,7 +6,7 @@ namespace CmplConsole
 {
     class Download
     {
-        public static void SGD()
+        public static void SGD() //TODO: Exibir um bloco de texto para inserção das sobs, além de uma caixa com escolha de data para baixar DWG (mais atual) + SGD (da data específica)
         {
             Gomnet.Settings();
             Chrome.Initializer();
@@ -40,6 +40,11 @@ namespace CmplConsole
                 }
             }
             Console.Write("End of execution.");
+        }
+
+        public static void Orcamento()
+        {
+            //TODO: Implementar download de orçamento da sob
         }
 
         public static void DWG()

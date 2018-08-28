@@ -16,13 +16,20 @@ namespace CmplConsole
 {
     class ProgramaSob
     {
-        public static void Vistoria()
+        public static void ProgramaVistoria()
         {
             // TODO: Implementar programação da sob em estado de vistoria
         }
 
-        public static void Execução()
+        public static void GeraPedSAP()
         {
+            // TODO: Implementar criação de pedido de materiais no SAP
+            // TODO: Alterar quantidade de material solicitado de acordo com valores contidos numa planilha xls. Gerar erro caso a quantidade solicitada seja maior que orçada.
+        }
+
+        public static void ProgramaExecucao()
+        {
+            // TODO: Consultar a sob antes de programar, para saber se o status está como Fechado ou Certificado, evitando nova programação da mesma. (Gerar retorno e pular para próxima sob)
             Gomnet.Settings();
             Chrome.Initializer();
             Gomnet.Login();
