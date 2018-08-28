@@ -17,6 +17,8 @@ namespace CmplConsole
             Chrome.Initializer();
             Gomnet.Login();
             Chrome.driver.Navigate().GoToUrl(Gomnet.urlVincSup);
+            Console.Clear();
+            Console.WriteLine("Linking Supervisors...\n");
 
             string line;
             StreamReader file = new StreamReader(Gomnet.InSobSup);

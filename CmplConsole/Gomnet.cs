@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -45,6 +46,92 @@ namespace CmplConsole
             OutUpload = folder + @"\OutUpload.txt";
         }
 
+        public static void Menu()
+        {
+            Console.WriteLine("(1) Upload Files");
+            Console.WriteLine("(2) Download DWG");
+            Console.WriteLine("(3) Download SGD");
+            Console.WriteLine("(4) Link Supervisor");
+            Console.WriteLine("(5) Inspection Sob");
+            Console.WriteLine("(6) Program Sob (Inspection)");
+            Console.WriteLine("(7) Program Sob (Execution)");
+            Console.WriteLine("(8) Extract Sob Status");
+            Console.WriteLine("(9) Extract Sob Work Number");
+            Console.WriteLine("(10) Extract Sob Status");
+            Console.WriteLine("(11) Verify Energized Sob");
+            Console.WriteLine("(12) DWG File Filter");
+            Console.WriteLine("(13) PDF File Filter");
+            Console.Write("\nChoose your option: ");
+            var key = Console.ReadLine();
+            switch (key)
+            {
+                case "1":
+                    {
+                        Upload.Arquivos();
+                        break;
+                    }
+                case "2":
+                    {
+                        Download.DWG();
+                        break;
+                    }
+                case "3":
+                    {
+                        Download.SGD();
+                        break;
+                    }
+                case "4":
+                    {
+                        VistoriaSob.VincSupervisor();
+                        break;
+                    }
+                case "5":
+                    {
+
+                        break;
+                    }
+                case "6":
+                    {
+
+                        break;
+                    }
+                case "7":
+                    {
+
+                        break;
+                    }
+                case "8":
+                    {
+                        Extrair.SobStatus();
+                        break;
+                    }
+                case "9":
+                    {
+                        Extrair.SobTrabalho();
+                        break;
+                    }
+                case "10":
+                    {
+
+                        break;
+                    }
+                case "11":
+                    {
+
+                        break;
+                    }
+                case "12":
+                    {
+                        FiltraArquivo.DWG();
+                        break;
+                    }
+                case "13":
+                    {
+                        FiltraArquivo.PDF();
+                        break;
+                    }
+            }
+        }
         public static void Login()
         {
             //Informações de credenciais para login no GOMNET

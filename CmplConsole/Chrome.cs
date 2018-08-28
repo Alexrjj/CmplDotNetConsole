@@ -38,14 +38,17 @@ namespace CmplConsole
                 case 'y':
                 case 'Y':
                     {
+                        Console.WriteLine("\n\nInitializing...\n");
                         Chrome.Headless();
                         driver = new ChromeDriver(options);
                         Actions action = new Actions(driver);
+                        
                         break;
                     }
                 case 'n':
                 case 'N':
                     {
+                        Console.WriteLine("\n\nInitializing...");
                         Chrome.NonHeadless();
                         driver = new ChromeDriver(options);
                         Actions action = new Actions(driver);
