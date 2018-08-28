@@ -85,6 +85,7 @@
   <ItemGroup>
     <Compile Include="Chrome.cs" />
     <Compile Include="Download.cs" />
+    <Compile Include="FiltraArquivo.cs" />
     <Compile Include="Gomnet.cs" />
     <Compile Include="GoogleForms.cs" />
     <Compile Include="ProgramaSob.cs" />
@@ -92,7 +93,6 @@
     <Compile Include="Upload.cs" />
     <Compile Include="ExcelReader.cs" />
     <Compile Include="VistoriaSob.cs" />
-    <Content Include="FileFilter.cs" />
     <Compile Include="Principal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
