@@ -16,12 +16,12 @@ namespace CmplConsole
             Gomnet.Settings();
             Chrome.Initializer();
             Gomnet.Login();
+            Chrome.driver.Navigate().GoToUrl(Gomnet.urlVincSup);
 
             string line;
             StreamReader file = new StreamReader(Gomnet.InSobSup);
             while ((line = file.ReadLine()) != null)
             {
-                Chrome.driver.Navigate().GoToUrl(Gomnet.urlVincSup);
                 Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_TextBox_SOB")).Clear();
                 var sob = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_TextBox_SOB"));
                 sob.SendKeys(line);
@@ -37,7 +37,7 @@ namespace CmplConsole
                     try
                     {
                         Chrome.driver.SwitchTo().Alert().Accept();
-                        Console.WriteLine(line + "linked supervisor.");
+                        Console.WriteLine(line + " linked");
                     }
                     catch (NoAlertPresentException)
                     {
@@ -45,7 +45,7 @@ namespace CmplConsole
                     }
                 } catch (NoSuchElementException)
                 {
-                    Console.WriteLine(line + " not found.");
+                    Console.WriteLine(line + " not linked.");
                     continue;
                 }
             }
