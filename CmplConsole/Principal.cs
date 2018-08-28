@@ -19,7 +19,7 @@ namespace CmplConsole
             Console.WriteLine("(10) Extract Sob Status");
             Console.WriteLine("(11) Verify Energized Sob");
             Console.WriteLine("(12) File Filter \n");
-            var key = Console.ReadKey().KeyChar.ToString();
+            var key = Console.ReadLine();
             switch (key)
             {
                 case "1":
@@ -39,7 +39,7 @@ namespace CmplConsole
                     }
                 case "4":
                     {
-                        
+                        VistoriaSob.VincSupervisor();
                         break;
                     }
                 case "5":
@@ -79,7 +79,7 @@ namespace CmplConsole
                     }
                 case "12":
                     {
-
+                        FiltraArquivo.DWG();
                         break;
                     }
             }
