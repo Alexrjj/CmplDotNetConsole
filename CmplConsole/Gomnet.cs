@@ -97,7 +97,7 @@ namespace CmplConsole
                     }
                 case "7":
                     {
-
+                        ProgramaSob.Execucao();
                         break;
                     }
                 case "8":
