@@ -11,7 +11,6 @@ namespace CmplConsole
     {
         public static ChromeOptions options = new ChromeOptions();
         public static IWebDriver driver;
-        public static Actions action;
 
         public static void NonHeadless()
         {
@@ -41,8 +40,7 @@ namespace CmplConsole
                         Console.WriteLine("\n\nInitializing...\n");
                         Chrome.Headless();
                         driver = new ChromeDriver(options);
-                        Actions action = new Actions(driver);
-                        
+                        //Actions action = new Actions(driver);
                         break;
                     }
                 case 'n':
@@ -51,7 +49,7 @@ namespace CmplConsole
                         Console.WriteLine("\n\nInitializing...");
                         Chrome.NonHeadless();
                         driver = new ChromeDriver(options);
-                        Actions action = new Actions(driver);
+                        //Actions action = new Actions(driver);
                         break;
                     }
                 default:
