@@ -11,6 +11,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Interactions.Internal;
 using OpenQA.Selenium.Support.UI;
+using Actions = OpenQA.Selenium.Interactions.Actions;
+
 
 namespace CmplConsole
 {
@@ -33,6 +35,8 @@ namespace CmplConsole
             Gomnet.Settings();
             Chrome.Initializer();
             Gomnet.Login();
+            WebDriverWait wait = new WebDriverWait(Chrome.driver, TimeSpan.FromSeconds(3));
+            Actions action = new Actions(Chrome.driver);
 
             string planilha = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"\sobs.xlsm";
             Excel.Application excelBaremos = new Excel.Application();
@@ -44,28 +48,34 @@ namespace CmplConsole
             {
                 Excel.Worksheet ws = (Excel.Worksheet)wb.Sheets[g]; // Cada pasta assume o número atual em "count", que deve ser iniciado em 1
 
-                Chrome.driver.Navigate().GoToUrl(Gomnet.urlConsulta);
+                Chrome.driver.Navigate().GoToUrl(Gomnet.urlAcompObra);
 
                 var sob = Chrome.driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$TextBox_NumSOB"));
                 
                 sob.SendKeys(ws.Range("A2").Value.ToString());
                 Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_ImageButton_Enviar")).Click();
 
-                Thread.Sleep(3000);
-                var compel = Chrome.driver.FindElement(By.XPath("//*[contains(text(), 'COMPEL CONSTRUÇÕES MONTAGENS E')]"));
-                if (compel.Displayed)
+                try
                 {
-                    Chrome.action.Click(compel).Perform();
-                }
-                
-                int m = 0;
-                while (m <= 8)
+                    var compel = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[contains(text(), 'COMPEL CONSTRUÇÕES MONTAGENS E')]")));
+                    if (compel.Displayed)
+                    {
+                        action.Click(compel).Perform();
+                        int m = 0;
+                        while (m <= 8)
+                        {
+                            action.SendKeys(Keys.Tab).Perform();
+                            m += 1;
+                        }
+                        action.SendKeys(Keys.Space).Perform();
+                    }
+                } catch (NullReferenceException)
                 {
-                    Chrome.action.SendKeys(Keys.Tab).Perform();
-                    m += 1;
+                    Console.WriteLine("Sob not available for Compel.");
+                    break;
                 }
-                
-                
+                break; // Pára o script ao chegar no preenchimendo de dados da programação
+
                 var totalBaremos = ws.UsedRange.Columns["D"].Rows.Count; // Pega o total de linhas da coluna D (Baremos)
 
                 var baremos = ws.UsedRange.Columns["D"]; // Pega todos os valores contidos na coluna D (Baremos)
