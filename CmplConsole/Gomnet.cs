@@ -14,11 +14,11 @@ namespace CmplConsole
         public static string urlConsulta;
         public static string urlUpload;
         public static string urlVincSup;
+        public static string urlAcompObra;
         public static string folder;
         public static Excel.Application excel;
         public static string login;
         public static string senha;
-        public static string googleForm;
         public static string InSobStatus;
         public static string InSobTrab;
         public static string InSobDWG;
@@ -34,7 +34,7 @@ namespace CmplConsole
             urlConsulta = "http://gomnet.ampla.com/ConsultaObra.aspx";
             urlUpload = "http://gomnet.ampla.com/Upload.aspx?numsob=";
             urlVincSup = "http://gomnet.ampla.com/vistoria/vincularSupervisor.aspx";
-            googleForm = "https://docs.google.com/forms/d/e/1FAIpQLSdqi7NxRSzKM0M3-ZQn5Fpn6rKriKJnw_0EPnlD3iScx18yXg/viewform";
+            urlAcompObra = "http://gomnet.ampla.com/AcompanhamentoObras.aspx";
             folder = Path.GetDirectoryName(Application.ExecutablePath);
             InSobStatus = folder + @"\InSobStatus.txt";
             InSobTrab = folder + @"\InSobTrab.txt";

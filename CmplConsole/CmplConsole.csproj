@@ -87,7 +87,6 @@
     <Compile Include="Download.cs" />
     <Compile Include="FiltraArquivo.cs" />
     <Compile Include="Gomnet.cs" />
-    <Compile Include="GoogleForms.cs" />
     <Compile Include="ProgramaSob.cs" />
     <Compile Include="Extrair.cs" />
     <Compile Include="Upload.cs" />
