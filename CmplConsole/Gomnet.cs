@@ -1,10 +1,11 @@
-﻿using OpenQA.Selenium;
+﻿using OfficeOpenXml;
+using OpenQA.Selenium;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Excel = NetOffice.ExcelApi;
+
 
 namespace CmplConsole
 {
@@ -16,7 +17,7 @@ namespace CmplConsole
         public static string urlVincSup;
         public static string urlAcompObra;
         public static string folder;
-        public static Excel.Application excel;
+        // public static Excel.Application excel;
         public static string login;
         public static string senha;
         public static string InSobStatus;
@@ -46,6 +47,7 @@ namespace CmplConsole
             OutUpload = folder + @"\OutUpload.txt";
         }
 
+        [Obsolete]
         public static void Menu()
         {
             Console.WriteLine("(1) Upload Files");
@@ -134,39 +136,42 @@ namespace CmplConsole
         }
         public static void Login()
         {
-            //Informações de credenciais para login no GOMNET
-            string credenciais = @"C:\gomnet.xlsx";
-            Excel.Application excel = new Excel.Application();
-            excel.DisplayAlerts = false;
-            Excel.Workbook workbook = excel.Workbooks.Open(credenciais);
-            Excel.Worksheet worksheet = (Excel.Worksheet)workbook.ActiveSheet;
-            login = worksheet.Range("A1").Value.ToString();
-            senha = worksheet.Range("A2").Value.ToString();
-
-            // Fecha o Excel e o processo .exe
-            excel.Quit();
-            excel.Dispose();
-
-            //Inicia o webdriver do Chrome
-            try
+            // Cria varíavel do xlsx atribuindo endereço local.
+            var arquivoXlsx = new FileInfo(@"C:\gomnet.xlsx");
+            // Abre e lê o arquivo xlsx.
+            using (var pacote = new ExcelPackage(arquivoXlsx))
             {
-                Chrome.driver.Navigate().GoToUrl(Gomnet.urlLogin);
-            }
-            catch (System.NullReferenceException) // Pára o script, caso falhe a opção escolhida no ChromeInitializer
-            {
-                return;
-            }
+                // Cria a variável da pasta a ser trabalhada.
+                var pasta = pacote.Workbook;
+                if (pasta != null) // Verifica se há alguma pasta de trabalho existente no xlsx.
+                {
+                    if (pasta.Worksheets.Count > 0)
+                    {
+                        // Pega a primeira pasta de trabalho.
+                        var pastaTrabalho = pasta.Worksheets.First();
+                        login = pastaTrabalho.Cells["A1"].Text;
+                        senha = pastaTrabalho.Cells["A2"].Text;
 
-            //Loga no sistema
-            IWebElement usrname = Chrome.driver.FindElement(By.Id("txtBoxLogin"));
-            IWebElement usrpass = Chrome.driver.FindElement(By.Id("txtBoxSenha"));
-            usrname.SendKeys(login);
-            usrpass.SendKeys(senha);
-            Chrome.driver.FindElement(By.Id("ImageButton_Login")).Click();
-            Chrome.driver.FindElement(By.XPath("//*[@id='ListBox_Perfil']/option[1]")).Click();
-            Chrome.driver.FindElement(By.XPath("//*[@id='ImageButton_Logar']")).Click();
+                        //Inicia o webdriver do Chrome
+                        try
+                        {
+                            Chrome.driver.Navigate().GoToUrl(Gomnet.urlLogin);
+                        }
+                        catch (System.NullReferenceException) // Pára o script, caso falhe a opção escolhida no ChromeInitializer
+                        {
+                            return;
+                        }
+
+                        //Loga no sistema
+                        IWebElement usrname = Chrome.driver.FindElement(By.Id("txtBoxLogin"));
+                        IWebElement usrpass = Chrome.driver.FindElement(By.Id("txtBoxSenha"));
+                        usrname.SendKeys(login);
+                        usrpass.SendKeys(senha);
+                        Chrome.driver.FindElement(By.Id("ImageButton_Login")).Click();
+                    }
+                }
+            }
         }
-
         public static void FechaJanela()
         {
             Chrome.driver.SwitchTo().Window(Chrome.driver.WindowHandles.Last());

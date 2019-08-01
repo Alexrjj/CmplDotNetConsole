@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CmplConsole
+﻿namespace CmplConsole
 {
     class Principal
     {

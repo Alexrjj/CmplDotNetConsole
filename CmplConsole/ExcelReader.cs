@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using OfficeOpenXml;
+using System;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Excel = NetOffice.ExcelApi;
-using System.Windows.Forms;
 
 namespace CmplConsole
 {
@@ -14,41 +9,42 @@ namespace CmplConsole
     {
         public static void LerBaremoQtd()
         {
-            string planilha = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"\sobs.xlsm";
-            Excel.Application excel = new Excel.Application();
-            excel.DisplayAlerts = false;
-            Excel.Workbook wb = excel.Workbooks.Open(planilha);
-            int count = wb.Worksheets.Count; // Pega o valor total de pastas
-            
-            for (int g = 1; g <= count; g++) // Inicia o loop em cada pasta
+            // Cria varíavel do xlsx atribuindo endereço local.
+            var arquivoXlsx = new FileInfo(@"C:\Users\Alex Piter\Desktop\Programação Filtrada.xlsx");
+            // Abre e lê o arquivo xlsx.
+            using (var pacote = new ExcelPackage(arquivoXlsx))
             {
-                Excel.Worksheet ws = (Excel.Worksheet)wb.Sheets[g]; // Cada pasta assume o número atual em "count", que deve ser iniciado em 1
-
-                var totalBaremos = ws.UsedRange.Columns["D"].Rows.Count; // Pega o total de linhas da coluna D (Baremos)
-
-                var baremos = ws.UsedRange.Columns["D"]; // Pega todos os valores contidos na coluna D (Baremos)
-                var qtds = ws.UsedRange.Columns["E"]; // Pega todos os valores contidos na coluna E (Quantidade)
-
-                //Faz um loop através das duas colunas, utilizando o ZIP, e retorna uma lista contendo os valores das mesmas.
-                for (int i = 2; i <= totalBaremos; i++) // O 'i' começa com '2' para ignorar a primeira linha "Baremos" e "Quantidade"
+                // Cria a variável da pasta a ser trabalhada.
+                var pasta = pacote.Workbook;
+                if (pasta != null) // Verifica se há alguma pasta de trabalho existente no xlsx.
                 {
-                    Excel.Range baremo = baremos.Cells[i];
-                    Excel.Range qtd = qtds.Cells[i];
-
-                    foreach (var valor in baremo.Zip(qtd, Tuple.Create)) // Cria uma tupla contendo valor coluna1/coluna2 e inicia o loop
-                    {                                                   // em todas as linhas.
-                        if (valor.Item1.Value2 != null && valor.Item2.Value2 != null) // Ignora células vazias (null)
+                    if (pasta.Worksheets.Count > 0)
+                    {
+                        // Pega a primeira pasta de trabalho.
+                        var pastaTrabalho = pasta.Worksheets.First();
+                        // Pega o número total de linhas da pasta de trabalho (considera a coluna com maior quantidade).
+                        var linhas = pastaTrabalho.Dimension.End.Row;
+                        // Faz um loop desde a primeira linha até a última.
+                        for (int i = 1; i <= linhas; i++)
                         {
-                            Console.WriteLine(Convert.ToString(valor.Item1.Value2) + " " + Convert.ToString(valor.Item2.Value2));
+                            var sob = pastaTrabalho.Cells[i, 3]; // Atribui a variável Sob à coluna 03 do arquivo, onde constam as Sobs.
+                            var data = pastaTrabalho.Cells[i, 4]; // Atribui a variável Data à coluna 04 do arquivo, onde constam as Datas.
+                            // Lê alternadamente a célula das duas colunas e cria uma tupla.
+                            foreach (var valor in sob.Zip(data, Tuple.Create))
+                            {
+                                // Verifica se a linha contém dados.
+                                if (valor.Item1.Text != null && valor.Item2.Text != null)
+                                {
+                                    // Escreve na tela o valor (texto) de cada célula.
+                                    Console.WriteLine(Convert.ToString(valor.Item1.Text) + " " + Convert.ToString(valor.Item2.Text));
+                                }
+                            }
+
                         }
+
                     }
                 }
             }
-
-            //Fecha o excel e o processo .exe
-            excel.Quit();
-            excel.Dispose();
-
             Console.ReadKey();
         }
     }
