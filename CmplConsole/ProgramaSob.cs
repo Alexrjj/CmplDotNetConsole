@@ -21,7 +21,6 @@ namespace CmplConsole
             // TODO: Alterar quantidade de material solicitado de acordo com valores contidos numa planilha xls. Gerar erro caso a quantidade solicitada seja maior que orçada.
         }
 
-        [Obsolete]
         public static void Execucao()
         {
             // TODO: Consultar a sob antes de programar, para saber se o status está como Fechado ou Certificado, evitando nova programação da mesma. (Gerar retorno e pular para próxima sob)
@@ -54,7 +53,7 @@ namespace CmplConsole
 
                     try
                     {
-                        var compel = wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath("//*[contains(text(), 'COMPEL CONSTRUÇÕES MONTAGENS E')]")));
+                        IWebElement compel = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[contains(text(), 'COMPEL CONSTRUÇÕES MONTAGENS E')]")));
                         if (compel.Displayed)
                         {
                             action.Click(compel).Perform();

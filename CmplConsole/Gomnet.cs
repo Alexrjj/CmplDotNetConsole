@@ -47,7 +47,6 @@ namespace CmplConsole
             OutUpload = folder + @"\OutUpload.txt";
         }
 
-        [Obsolete]
         public static void Menu()
         {
             Console.WriteLine("(1) Upload Files");
