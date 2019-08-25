@@ -1,9 +1,11 @@
 ﻿using OfficeOpenXml;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Actions = OpenQA.Selenium.Interactions.Actions;
 
 namespace CmplConsole
@@ -27,66 +29,74 @@ namespace CmplConsole
             Gomnet.Settings();
             Chrome.Initializer();
             Gomnet.Login();
-            WebDriverWait wait = new WebDriverWait(Chrome.driver, TimeSpan.FromSeconds(3));
+            WebDriverWait wait = new WebDriverWait(Chrome.driver, TimeSpan.FromSeconds(5));
             Actions action = new Actions(Chrome.driver);
 
             // string planilha = Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName) + @"\sobs.xlsm";
             // Cria varíavel do xlsx atribuindo endereço local.
-            var arquivoXlsx = new FileInfo(@"C:\gomnet.xlsx");
+            var arquivoXlsx = new FileInfo(@"Programação Filtrada.xlsx");
             // Abre e lê o arquivo xlsx.
             using (var pacote = new ExcelPackage(arquivoXlsx))
             {
                 // Cria a variável da pasta a ser trabalhada.
-                var pastas = pacote.Workbook;
-                int count = pastas.Worksheets.Count; // Pega o valor total de pastas
+                var pasta = pacote.Workbook;
+                //int count = pastas.Worksheets.Count; // Pega o valor total de pastas
 
-                for (int p = 1; p <= count; p++) // Inicia o loop em cada pasta
-                {
-                    var pasta = pastas.Worksheets[p]; // Cada pasta assume o número atual em "count", que deve ser iniciado em 1
-
-                    Chrome.driver.Navigate().GoToUrl(Gomnet.urlAcompObra);
-
-                    var sob = Chrome.driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$TextBox_NumSOB"));
-
-                    sob.SendKeys(pasta.Cells["A2"].Value.ToString());
-                    Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_ImageButton_Enviar")).Click();
-
-                    try
+                if (pasta.Worksheets.Count > 0)
                     {
-                        IWebElement compel = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[contains(text(), 'COMPEL CONSTRUÇÕES MONTAGENS E')]")));
-                        if (compel.Displayed)
+                    //var pasta = pastas.Worksheets[p]; // Cada pasta assume o número atual em "count", que deve ser iniciado em 1
+                    var pastaTrabalho = pasta.Worksheets.First();
+                    var linhas = pastaTrabalho.Dimension.End.Row;
+
+                    for (int linha = 1; linha <= linhas; linha++)
+                    {
+                        string x = pastaTrabalho.Cells[linha, 3].Value.ToString();
+                        string doisZeros = Regex.Replace(x, @"\A131|\A100", "00$&"); // Para sobs iniciadas em "100" ou "131", acrescenta dois zeros no início da mesma.
+                        string cincoZeros = Regex.Replace(doisZeros, @"\A[1-4]", "00000$&"); // Para sobs iniciadas em 1-4, acrescenta cinco zeros no início da mesma.
+                        string sobFinal = Regex.Split(cincoZeros, @"[\s\.]")[0]; // Delimita espaço quando há duas sobs na mesma célula.
+                        Chrome.driver.Navigate().GoToUrl(Gomnet.urlAcompObra);
+
+                        var sob = Chrome.driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$TextBox_NumSOB"));
+                        try
                         {
-                            action.Click(compel).Perform();
-                            int m = 0;
-                            while (m <= 8)
-                            {
-                                action.SendKeys(Keys.Tab).Perform();
-                                m += 1;
-                            }
-                            action.SendKeys(Keys.Space).Perform();
+                            sob.SendKeys(sobFinal);
                         }
-                    }
-                    catch (NullReferenceException)
-                    {
-                        Console.WriteLine("Sob not available for Compel.");
-                        break;
-                    }
-                    //break; // Pára o script ao chegar no preenchimendo de dados da programação
-
-                    var linhas =  pasta.Dimension.End.Row;
-                    // Faz um loop desde a primeira linha até a última.
-                    for (int i = 1; i <= linhas; i++)
-                    {
-                        var baremo = pasta.Cells[i, 3]; // Atribui a variável Sob à coluna 03 do arquivo, onde constam as Sobs.
-                        var qtd = pasta.Cells[i, 4]; // Atribui a variável Data à coluna 04 do arquivo, onde constam as Datas.
-                                                              // Lê alternadamente a célula das duas colunas e cria uma tupla.
-                        foreach (var valor in baremo.Zip(qtd, Tuple.Create))
+                        catch (NullReferenceException)
                         {
-                            // Verifica se a linha contém dados.
-                            if (valor.Item1.Text != null && valor.Item2.Text != null)
+                            Console.WriteLine("Não há mais nada a programar.");
+                            break;
+                        }
+                        Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_ImageButton_Enviar")).Click();
+
+                        try
+                        {
+                            IWebElement compel = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[text() = 'COMPEL CONSTRUÇÕES MONTAGENS E']/following::td[31]")));
+                            if (compel.Displayed)
                             {
-                                // Escreve na tela o valor (texto) de cada célula.
-                                Console.WriteLine(Convert.ToString(valor.Item1.Text) + " " + Convert.ToString(valor.Item2.Text));
+                                compel.Click();
+                            }
+                        }
+                        catch (WebDriverTimeoutException)
+                        {
+                            Console.WriteLine(sobFinal + " não há registro. Favor verificar.");
+                            continue;
+                        }
+                        //break; // Pára o script ao chegar no preenchimendo de dados da programação
+
+                        // Faz um loop desde a primeira linha até a última.
+                        for (int i = 1; i <= linhas; i++)
+                        {
+                            var baremo = pastaTrabalho.Cells[i, 3]; // Atribui a variável Sob à coluna 03 do arquivo, onde constam as Sobs.
+                            var qtd = pastaTrabalho.Cells[i, 4]; // Atribui a variável Data à coluna 04 do arquivo, onde constam as Datas.
+                                                                 // Lê alternadamente a célula das duas colunas e cria uma tupla.
+                            foreach (var valor in baremo.Zip(qtd, Tuple.Create))
+                            {
+                                // Verifica se a linha contém dados.
+                                if (valor.Item1.Text != null && valor.Item2.Text != null)
+                                {
+                                    // Escreve na tela o valor (texto) de cada célula.
+                                    Console.WriteLine(Convert.ToString(valor.Item1.Text) + " " + Convert.ToString(valor.Item2.Text));
+                                }
                             }
                         }
                     }
