@@ -30,35 +30,24 @@ namespace CmplConsole
 
         public static void Initializer()
         {
-            Console.WriteLine("\nHeadless Mode? (y/n)");
-            var mode = Console.ReadKey().KeyChar;
-            switch (mode)
+            try
             {
-                case 'y':
-                case 'Y':
-                    {
-                        Console.WriteLine("\n\nInitializing...\n");
-                        Chrome.Headless();
-                        driver = new ChromeDriver(options);
-                        //Actions action = new Actions(driver);
-                        break;
-                    }
-                case 'n':
-                case 'N':
-                    {
-                        Console.WriteLine("\n\nInitializing...");
-                        Chrome.NonHeadless();
-                        driver = new ChromeDriver(options);
-                        //Actions action = new Actions(driver);
-                        break;
-                    }
-                default:
-                    {
-                        Console.WriteLine("\nInvalid Option.");
-                        Console.WriteLine("\nPress any key to finish.");
-                        Console.ReadKey();
-                        break;
-                    }
+                if (Form1.Headless.Checked == true)
+                {
+                    Console.WriteLine("\n\nInitializing in Headless Mode...\n");
+                    Headless();
+                    driver = new ChromeDriver(options);
+                }
+                if (Form1.Headless.Checked == false)
+                {
+                    Console.WriteLine("\n\nInitializing in Normal Mode...");
+                    NonHeadless();
+                    driver = new ChromeDriver(options);
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Impossível continuar.");
             }
         }
     }
