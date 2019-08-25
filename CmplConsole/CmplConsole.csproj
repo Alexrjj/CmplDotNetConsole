@@ -98,7 +98,6 @@
     <Compile Include="Upload.cs" />
     <Compile Include="ExcelReader.cs" />
     <Compile Include="VistoriaSob.cs" />
-    <Compile Include="Principal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
