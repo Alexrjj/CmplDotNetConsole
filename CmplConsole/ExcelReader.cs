@@ -10,7 +10,7 @@ namespace CmplConsole
         public static void LerBaremoQtd()
         {
             // Cria varíavel do xlsx atribuindo endereço local.
-            var arquivoXlsx = new FileInfo(@"C:\Users\Alex Piter\Desktop\Programação Filtrada.xlsx");
+            var arquivoXlsx = new FileInfo(@"Programação Filtrada.xlsx");
             // Abre e lê o arquivo xlsx.
             using (var pacote = new ExcelPackage(arquivoXlsx))
             {
@@ -25,7 +25,7 @@ namespace CmplConsole
                         // Pega o número total de linhas da pasta de trabalho (considera a coluna com maior quantidade).
                         var linhas = pastaTrabalho.Dimension.End.Row;
                         // Faz um loop desde a primeira linha até a última.
-                        for (int i = 1; i <= linhas; i++)
+                        for (int i = 2; i <= linhas; i++)
                         {
                             var sob = pastaTrabalho.Cells[i, 3]; // Atribui a variável Sob à coluna 03 do arquivo, onde constam as Sobs.
                             var data = pastaTrabalho.Cells[i, 4]; // Atribui a variável Data à coluna 04 do arquivo, onde constam as Datas.
