@@ -57,9 +57,10 @@ namespace CmplConsole
                         Chrome.driver.Navigate().GoToUrl(Gomnet.urlAcompObra);
 
                         var sob = Chrome.driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$TextBox_NumSOB"));
+                        // Envia a variável apenas quando há dados na célula, do contrário, informa que não há mais Sobs.
                         try
                         {
-                            sob.SendKeys(sobFinal);
+                            sob.SendKeys(sobFinal); 
                         }
                         catch (NullReferenceException)
                         {
@@ -67,13 +68,13 @@ namespace CmplConsole
                             break;
                         }
                         Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_ImageButton_Enviar")).Click();
-
+                        // Reconhece a linha onde foi despachado para a COMPEL, através do XPATH, e clica no ícone de programação da mesma. Se não houver, retorna a sob com erro.
                         try
                         {
-                            IWebElement compel = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[text() = 'COMPEL CONSTRUÇÕES MONTAGENS E']/following::td[31]")));
-                            if (compel.Displayed)
+                            IWebElement parceiraCompel = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[text() = 'COMPEL CONSTRUÇÕES MONTAGENS E']/following::td[31]")));
+                            if (parceiraCompel.Displayed)
                             {
-                                compel.Click();
+                                parceiraCompel.Click();
                             }
                         }
                         catch (WebDriverTimeoutException)
@@ -81,14 +82,13 @@ namespace CmplConsole
                             Console.WriteLine(sobFinal + " não há registro. Favor verificar.");
                             continue;
                         }
-                        //break; // Pára o script ao chegar no preenchimendo de dados da programação
 
-                        // Faz um loop desde a primeira linha até a última.
+                        // Faz um loop desde a primeira linha com código baremo até a última.
                         for (int i = 1; i <= linhas; i++)
                         {
                             var baremo = pastaTrabalho.Cells[i, 3]; // Atribui a variável Sob à coluna 03 do arquivo, onde constam as Sobs.
                             var qtd = pastaTrabalho.Cells[i, 4]; // Atribui a variável Data à coluna 04 do arquivo, onde constam as Datas.
-                                                                 // Lê alternadamente a célula das duas colunas e cria uma tupla.
+                            //                                     // Lê alternadamente a célula das duas colunas e cria uma tupla.
                             foreach (var valor in baremo.Zip(qtd, Tuple.Create))
                             {
                                 // Verifica se a linha contém dados.
