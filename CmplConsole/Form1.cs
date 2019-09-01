@@ -44,6 +44,10 @@ namespace CmplConsole
         }
         private void sg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Error != null)
+            {
+                throw new Exception("Impossível continuar ", e.Error);
+            }
             button1.Enabled = true;
             checkBox1.Enabled = true;
         }
