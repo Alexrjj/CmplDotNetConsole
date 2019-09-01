@@ -1,6 +1,5 @@
 ﻿using OfficeOpenXml;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.IO;
@@ -94,10 +93,10 @@ namespace CmplConsole
                         Chrome.js.ExecuteScript("arguments[0].value = 'A3279'", servicoSup);
 
                         IWebElement dataInicial = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_Control_DataHora_InicioPrevisto_TextBox6"));
-                        Chrome.js.ExecuteScript("arguments[0].value = '31/08/2019 00:00'", dataInicial);
+                        Chrome.js.ExecuteScript("arguments[0].value = '01/09/2019 00:00'", dataInicial);
 
                         IWebElement dataFinal = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_Control_DataHora_TerminoPrevisto_TextBox6"));
-                        Chrome.js.ExecuteScript("arguments[0].value = '31/08/2019 00:05'", dataFinal);
+                        Chrome.js.ExecuteScript("arguments[0].value = '01/09/2019 00:05'", dataFinal);
 
 
                         // Adiciona técnicos à tarefa
@@ -149,11 +148,12 @@ namespace CmplConsole
                             try
                             {
                                 IWebElement bar = Chrome.driver.FindElement(By.XPath("*//tr/td[contains(text(), '" + valor.Item1 + "')]/preceding-sibling::td/input"));
+                                IWebElement barQtd = Chrome.driver.FindElement(By.XPath("*//tr/td[text() = '" + valor.Item1 + "']/following::td[2]/input[@type='text']"));
                                 if (bar.Displayed)
                                 {
                                     bar.Click();
-                                    action.SendKeys(Keys.Tab).Perform();
-                                    action.SendKeys(valor.Item2).Perform();
+                                    barQtd.Clear();
+                                    barQtd.SendKeys(valor.Item2);                                    
                                     break;
                                 }
                             }
@@ -164,7 +164,7 @@ namespace CmplConsole
                             continue;
                         }
                         // Ao fim do loop de inserção de baremos, clica no botão "registrar programação"
-                        // Chrome.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_btnEnviarItens']")).Click();
+                        Chrome.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_btnEnviarItens']")).Click();
                         Console.WriteLine(sobFinal + " programada com êxito.");
                     }
                 }
