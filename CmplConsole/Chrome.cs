@@ -11,6 +11,7 @@ namespace CmplConsole
     {
         public static ChromeOptions options = new ChromeOptions();
         public static IWebDriver driver;
+        public static IJavaScriptExecutor js;
 
         public static void NonHeadless()
         {
@@ -37,12 +38,14 @@ namespace CmplConsole
                     Console.WriteLine("\n\nInitializing in Headless Mode...\n");
                     Headless();
                     driver = new ChromeDriver(options);
+                    js = (IJavaScriptExecutor)driver;
                 }
                 if (Form1.Headless.Checked == false)
                 {
                     Console.WriteLine("\n\nInitializing in Normal Mode...");
                     NonHeadless();
                     driver = new ChromeDriver(options);
+                    js = (IJavaScriptExecutor)driver;
                 }
             }
             catch
