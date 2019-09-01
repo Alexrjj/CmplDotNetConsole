@@ -17,7 +17,7 @@ namespace CmplConsole
             // TODO: Implementar programação da sob em estado de vistoria
         }
 
-        public static void GeraPedSAP()
+            public static void GeraPedSAP()
         {
             // TODO: Implementar criação de pedido de materiais no SAP
             // TODO: Alterar quantidade de material solicitado de acordo com valores contidos numa planilha xls. Gerar erro caso a quantidade solicitada seja maior que orçada.
@@ -48,7 +48,7 @@ namespace CmplConsole
                     var pastaTrabalho = pasta.Worksheets.First();
                     var linhas = pastaTrabalho.Dimension.End.Row;
 
-                    for (int linha = 1; linha <= linhas; linha++)
+                    for (int linha = 2; linha <= linhas; linha++)
                     {
                         string x = pastaTrabalho.Cells[linha, 3].Value.ToString();
                         string doisZeros = Regex.Replace(x, @"\A131|\A100", "00$&"); // Para sobs iniciadas em "100" ou "131", acrescenta dois zeros no início da mesma.
@@ -83,22 +83,89 @@ namespace CmplConsole
                             continue;
                         }
 
-                        // Faz um loop desde a primeira linha com código baremo até a última.
-                        for (int i = 1; i <= linhas; i++)
+                        //Insere o valor da variável na textbox utilizando Javascript, otimizando a velocidade de exdecução
+                        IWebElement turma = Chrome.driver.FindElement(By.CssSelector("#ctl00_ContentPlaceHolder1_txtBoxTurma"));
+                        Chrome.js.ExecuteScript("arguments[0].value = 'COMP12'", turma);
+
+                        IWebElement servico = Chrome.driver.FindElement(By.CssSelector("#ctl00_ContentPlaceHolder1_txtBoxRespServico"));
+                        Chrome.js.ExecuteScript("arguments[0].value = 'A3279'", servico);
+
+                        IWebElement servicoSup = Chrome.driver.FindElement(By.CssSelector("#ctl00_ContentPlaceHolder1_txtBoxServicoSuplente"));
+                        Chrome.js.ExecuteScript("arguments[0].value = 'A3279'", servicoSup);
+
+                        IWebElement dataInicial = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_Control_DataHora_InicioPrevisto_TextBox6"));
+                        Chrome.js.ExecuteScript("arguments[0].value = '31/08/2019 00:00'", dataInicial);
+
+                        IWebElement dataFinal = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_Control_DataHora_TerminoPrevisto_TextBox6"));
+                        Chrome.js.ExecuteScript("arguments[0].value = '31/08/2019 00:05'", dataFinal);
+
+
+                        // Adiciona técnicos à tarefa
+                        Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_imgBtnGravarTecnicos")).Click();
+                        Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_gridViewTecnicos_ctl01_ChkBoxAll")).Click();
+                        Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_Button1")).Click();
+                        Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_btnVoltar")).Click();
+
+
+                        // Identifica o menu "Tipo de Programação" e seleciona a opção "Execução de Obra" utilizando Javascript
+                        IWebElement tipoProg = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_DropDownList_TipoProgramacao"));
+                        Chrome.js.ExecuteScript("arguments[0].value = 'N'", tipoProg);
+
+                        // Identifica o menu "Necessita Linha Viva" e seleciona a opção "Não" utilizando Javascript
+                        IWebElement linhaViva = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_DropDownList_linhaViva"));
+                        Chrome.js.ExecuteScript("arguments[0].value = 'N'", linhaViva);
+
+                        // Identifica o menu "Necessita Desligamento" e seleciona a opção "Não" utilizando Javascript
+                        IWebElement desliga = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_DropDownList_Desliga"));
+                        Chrome.js.ExecuteScript("arguments[0].value = 'N'", desliga);
+
+                        // Clica no botão "Programar"
+                        Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_Button_ProgramarTarefa")).Click();
+
+                        // Preenche o campo "Atividade" com o número da SOB utilizando Javascript
+                        IWebElement atividade = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_txtBoxAtividade"));
+
+                        // atividade.send_keys(sob_tratada)
+                        Chrome.js.ExecuteScript("arguments[0].value = '" + sobFinal + "'", atividade);
+
+                        // Identifica o menu "Horas" e insere o valor "01" utilizando Javascript
+                        IWebElement hora = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_DropDownList_Hora"));
+                        Chrome.js.ExecuteScript("arguments[0].value = '01'", hora);
+
+                        // Identifica o menu "Minutos" e insere o valor "00" utilizando Javascript
+                        IWebElement minuto = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_DropDownList_Minuto"));
+                        Chrome.js.ExecuteScript("arguments[0].value = '00'", minuto);
+
+                        // Identifica o menu "Viagem" e insere o valor "Não" utilizando Javascript
+                        IWebElement viagem = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_DropDownList_Viagem"));
+                        Chrome.js.ExecuteScript("arguments[0].value = 'N'", viagem);
+
+                        // Clica no botão "Adicionar Programação"
+                        Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_btnAdicionarProgramacao")).Click();
+                        
+                        // Insere pelo menos um baremo/material e confirma a programação
+                        foreach (var valor in BaremosModelo.baremo.Zip(BaremosModelo.qtd, Tuple.Create))
                         {
-                            var baremo = pastaTrabalho.Cells[i, 3]; // Atribui a variável Sob à coluna 03 do arquivo, onde constam as Sobs.
-                            var qtd = pastaTrabalho.Cells[i, 4]; // Atribui a variável Data à coluna 04 do arquivo, onde constam as Datas.
-                            //                                     // Lê alternadamente a célula das duas colunas e cria uma tupla.
-                            foreach (var valor in baremo.Zip(qtd, Tuple.Create))
+                            try
                             {
-                                // Verifica se a linha contém dados.
-                                if (valor.Item1.Text != null && valor.Item2.Text != null)
+                                IWebElement bar = Chrome.driver.FindElement(By.XPath("*//tr/td[contains(text(), '" + valor.Item1 + "')]/preceding-sibling::td/input"));
+                                if (bar.Displayed)
                                 {
-                                    // Escreve na tela o valor (texto) de cada célula.
-                                    Console.WriteLine(Convert.ToString(valor.Item1.Text) + " " + Convert.ToString(valor.Item2.Text));
+                                    bar.Click();
+                                    action.SendKeys(Keys.Tab).Perform();
+                                    action.SendKeys(valor.Item2).Perform();
+                                    break;
                                 }
                             }
+                            catch (NoSuchElementException)
+                            {
+                                continue;
+                            }
+                            continue;
                         }
+                        // Ao fim do loop de inserção de baremos, clica no botão "registrar programação"
+                        // Chrome.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_btnEnviarItens']")).Click();
+                        Console.WriteLine(sobFinal + " programada com êxito.");
                     }
                 }
             }
