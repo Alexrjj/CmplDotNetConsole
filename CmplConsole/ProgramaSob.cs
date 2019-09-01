@@ -49,6 +49,10 @@ namespace CmplConsole
 
                     for (int linha = 2; linha <= linhas; linha++)
                     {
+                        var cell_in = (double)pastaTrabalho.Cells[linha, 7].Value;
+                        var cell_fin = (double)pastaTrabalho.Cells[linha, 8].Value;
+                        var hr_in = DateTime.FromOADate(cell_in).TimeOfDay.ToString().Split(':');
+                        var hr_fin = DateTime.FromOADate(cell_fin).TimeOfDay.ToString().Split(':');
                         string x = pastaTrabalho.Cells[linha, 3].Value.ToString();
                         string doisZeros = Regex.Replace(x, @"\A131|\A100", "00$&"); // Para sobs iniciadas em "100" ou "131", acrescenta dois zeros no início da mesma.
                         string cincoZeros = Regex.Replace(doisZeros, @"\A[1-4]", "00000$&"); // Para sobs iniciadas em 1-4, acrescenta cinco zeros no início da mesma.
@@ -93,10 +97,12 @@ namespace CmplConsole
                         Chrome.js.ExecuteScript("arguments[0].value = 'A3279'", servicoSup);
 
                         IWebElement dataInicial = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_Control_DataHora_InicioPrevisto_TextBox6"));
-                        Chrome.js.ExecuteScript("arguments[0].value = '01/09/2019 00:00'", dataInicial);
+                        // Chrome.js.ExecuteScript("arguments[0].value = '01/09/2019 00:00'", dataInicial);
+                        Chrome.js.ExecuteScript("arguments[0].value = '" + DateTime.Now.ToString("dd/MM/yyyy ").ToString() + hr_in[0] + ":" + hr_in[1] + "'", dataInicial);
 
                         IWebElement dataFinal = Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_Control_DataHora_TerminoPrevisto_TextBox6"));
-                        Chrome.js.ExecuteScript("arguments[0].value = '01/09/2019 00:05'", dataFinal);
+                        // Chrome.js.ExecuteScript("arguments[0].value = '01/09/2019 00:05'", dataFinal);
+                        Chrome.js.ExecuteScript("arguments[0].value = '" + DateTime.Now.ToString("dd/MM/yyyy ").ToString() + hr_fin[0] + ":" + hr_fin[1] + "'", dataFinal);
 
 
                         // Adiciona técnicos à tarefa
