@@ -11,6 +11,9 @@ namespace CmplConsole
 {
     public class Gomnet
     {
+        public static ExcelWorkbook pasta;
+        public static ExcelPackage pacoteTrabalho;
+        public static FileInfo arquivoXlsx;
         public static string urlProgObraVist;
         public static string urlBaseGomnet;
         public static string urlLogin;
@@ -32,6 +35,9 @@ namespace CmplConsole
 
         public static void Settings()
         {
+            arquivoXlsx = new FileInfo(@"Programação Filtrada.xlsx");
+            pacoteTrabalho = new ExcelPackage(arquivoXlsx);
+            pasta = pacoteTrabalho.Workbook;
             urlBaseGomnet = "http://146.133.16.45/gomnetrio/";
             urlLogin = urlBaseGomnet;
             urlConsulta = urlBaseGomnet + "ConsultaObra.aspx";

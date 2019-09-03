@@ -13,25 +13,18 @@ namespace CmplConsole
     {
         public static void Vistoria()
         {
-            // TODO: Consultar a sob antes de programar, para saber se o status está como Fechado ou Certificado, evitando nova programação da mesma. (Gerar retorno e pular para próxima sob)
             Gomnet.Settings();
             Chrome.Initializer();
             Gomnet.Login();
             WebDriverWait wait = new WebDriverWait(Chrome.driver, TimeSpan.FromSeconds(5));
             Actions action = new Actions(Chrome.driver);
 
-            // Cria varíavel do xlsx atribuindo endereço local.
-            var arquivoXlsx = new FileInfo(@"Programação Filtrada.xlsx");
             // Abre e lê o arquivo xlsx.
-            using (var pacote = new ExcelPackage(arquivoXlsx))
+            using (Gomnet.pacoteTrabalho)
             {
-                // Cria a variável da pasta a ser trabalhada.
-                var pasta = pacote.Workbook;
-                //int count = pastas.Worksheets.Count; // Pega o valor total de pastas
-
-                if (pasta.Worksheets.Count > 0)
+                if (Gomnet.pasta.Worksheets.Count > 0)
                 {
-                    var pastaTrabalho = pasta.Worksheets.First();
+                    var pastaTrabalho = Gomnet.pasta.Worksheets.First();
                     var linhas = pastaTrabalho.Dimension.End.Row;
 
                     for (int linha = 2; linha <= linhas; linha++)
@@ -173,7 +166,7 @@ namespace CmplConsole
                                         continue;
                                     }
                                     // Ao fim do loop de inserção de baremos, clica no botão "registrar programação"
-                                    Chrome.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_btnEnviarItens']")).Click();
+                                    //Chrome.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_btnEnviarItens']")).Click();
                                     Console.WriteLine(sobFinal + " programada com êxito.");
                                 }
                             }
@@ -192,9 +185,15 @@ namespace CmplConsole
         {
             // TODO: Implementar criação de pedido de materiais no SAP
             // TODO: Alterar quantidade de material solicitado de acordo com valores contidos numa planilha xls. Gerar erro caso a quantidade solicitada seja maior que orçada.
+
         }
 
-        public static void Energizacao()
+        public static void FinalizaGomMob()
+        {
+            //TODO: Implementar finalização de sobs programadas
+        }
+
+        public static void EnergizaGomMob()
         {
             //TODO: Implementar energização de sobs concluídas
         }
