@@ -16,8 +16,6 @@ namespace CmplConsole
             Gomnet.Settings();
             Chrome.Initializer();
             Gomnet.Login();
-            WebDriverWait wait = new WebDriverWait(Chrome.driver, TimeSpan.FromSeconds(5));
-            Actions action = new Actions(Chrome.driver);
 
             // Abre e lê o arquivo xlsx.
             using (Gomnet.pacoteTrabalho)
@@ -46,7 +44,7 @@ namespace CmplConsole
                             consultaStatusSob.SendKeys(sobFinal);
                             Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_ImageButton_Enviar")).Click();
 
-                            IWebElement sobDespachada = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/form/table/tbody/tr[4]/td/div[3]/table/tbody/tr[2]/td[8][contains(text(), '" + sobFinal + "')]")));
+                            IWebElement sobDespachada = Chrome.wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/form/table/tbody/tr[4]/td/div[3]/table/tbody/tr[2]/td[8][contains(text(), '" + sobFinal + "')]")));
                             if (sobDespachada.Displayed)
                             {
                                 // Se o status for diferente de "Vistoria", informa a sob já programada e pula para a próxima. Do contrário, acessa a página referente à programação para dar prosseguimento.
@@ -74,7 +72,7 @@ namespace CmplConsole
                                     // Reconhece a linha onde foi despachado para a COMPEL, através do XPATH, e clica no ícone de programação da mesma. Se não houver, retorna a sob com erro.
                                     try
                                     {
-                                        IWebElement parceiraCompel = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[text() = 'COMPEL CONSTRUÇÕES MONTAGENS E']/following::td[17]")));
+                                        IWebElement parceiraCompel = Chrome.wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//*[text() = 'COMPEL CONSTRUÇÕES MONTAGENS E']/following::td[17]")));
                                         if (parceiraCompel.Displayed)
                                         {
                                             parceiraCompel.Click();
@@ -185,7 +183,32 @@ namespace CmplConsole
         {
             // TODO: Implementar criação de pedido de materiais no SAP
             // TODO: Alterar quantidade de material solicitado de acordo com valores contidos numa planilha xls. Gerar erro caso a quantidade solicitada seja maior que orçada.
+            Gomnet.Settings();
+            Chrome.Initializer();
+            Gomnet.Login();
 
+            // Abre e lê o arquivo xlsx.
+            using (Gomnet.pacoteTrabalho)
+            {
+                if (Gomnet.pasta.Worksheets.Count > 0)
+                {
+                    var pastaTrabalho = Gomnet.pasta.Worksheets.First();
+                    var linhas = pastaTrabalho.Dimension.End.Row;
+
+                    for (int linha = 2; linha <= linhas; linha++)
+                    {
+                        var cell_in = (double)pastaTrabalho.Cells[linha, 7].Value;
+                        var cell_fin = (double)pastaTrabalho.Cells[linha, 8].Value;
+                        var hr_in = DateTime.FromOADate(cell_in).TimeOfDay.ToString().Split(':');
+                        var hr_fin = DateTime.FromOADate(cell_fin).TimeOfDay.ToString().Split(':');
+                        string x = pastaTrabalho.Cells[linha, 3].Value.ToString();
+                        string doisZeros = Regex.Replace(x, @"\A131|\A100", "00$&"); // Para sobs iniciadas em "100" ou "131", acrescenta dois zeros no início da mesma.
+                        string cincoZeros = Regex.Replace(doisZeros, @"\A[1-4]", "00000$&"); // Para sobs iniciadas em 1-4, acrescenta cinco zeros no início da mesma.
+                        string sobFinal = Regex.Split(cincoZeros, @"[\s\.]")[0]; // Delimita espaço quando há duas sobs na mesma célula.
+
+                    }
+                }
+            }
         }
 
         public static void FinalizaGomMob()

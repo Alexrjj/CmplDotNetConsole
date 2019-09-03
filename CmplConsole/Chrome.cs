@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.IO;
 using System.Windows.Forms;
@@ -12,6 +13,8 @@ namespace CmplConsole
         public static ChromeOptions options = new ChromeOptions();
         public static IWebDriver driver;
         public static IJavaScriptExecutor js;
+        public static WebDriverWait wait;
+        public static Actions action;
 
         public static void NonHeadless()
         {
@@ -39,6 +42,8 @@ namespace CmplConsole
                     Headless();
                     driver = new ChromeDriver(options);
                     js = (IJavaScriptExecutor)driver;
+                    wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                    action = new Actions(driver);
                 }
                 if (Form1.Headless.Checked == false)
                 {
@@ -46,6 +51,8 @@ namespace CmplConsole
                     NonHeadless();
                     driver = new ChromeDriver(options);
                     js = (IJavaScriptExecutor)driver;
+                    wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+                    action = new Actions(driver);
                 }
             }
             catch
