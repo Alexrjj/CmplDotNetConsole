@@ -11,9 +11,11 @@ namespace CmplConsole
 {
     public class Gomnet
     {
+        
         public static ExcelWorkbook pasta;
         public static ExcelPackage pacoteTrabalho;
         public static FileInfo arquivoXlsx;
+        public static string urlSolicitaMaterial;
         public static string urlProgObraVist;
         public static string urlBaseGomnet;
         public static string urlLogin;
@@ -35,6 +37,7 @@ namespace CmplConsole
 
         public static void Settings()
         {
+            urlSolicitaMaterial = urlBaseGomnet + "SolicitacaoDeMateriais.aspx?vTrabCodigo=";
             arquivoXlsx = new FileInfo(@"Programação Filtrada.xlsx");
             pacoteTrabalho = new ExcelPackage(arquivoXlsx);
             pasta = pacoteTrabalho.Workbook;

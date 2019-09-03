@@ -13,6 +13,7 @@ namespace CmplConsole
     {
         public static void Vistoria()
         {
+            
             Gomnet.Settings();
             Chrome.Initializer();
             Gomnet.Login();
@@ -206,6 +207,58 @@ namespace CmplConsole
                         string cincoZeros = Regex.Replace(doisZeros, @"\A[1-4]", "00000$&"); // Para sobs iniciadas em 1-4, acrescenta cinco zeros no início da mesma.
                         string sobFinal = Regex.Split(cincoZeros, @"[\s\.]")[0]; // Delimita espaço quando há duas sobs na mesma célula.
 
+                        try
+                        {
+                            Chrome.driver.Navigate().GoToUrl(Gomnet.urlConsulta);
+                            var consultaStatusSob = Chrome.driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$TextBox_NumSOB"));
+                            consultaStatusSob.SendKeys(sobFinal);
+                            Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_ImageButton_Enviar")).Click();
+
+                            IWebElement sobDespachada = Chrome.wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/form/table/tbody/tr[4]/td/div[3]/table/tbody/tr[2]/td[8][contains(text(), '" + sobFinal + "')]")));
+                            if (sobDespachada.Displayed)
+                            {
+                                string numTrab = Chrome.driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_Gridview_GomNet1']/tbody/tr[2]/td[4]")).Text;
+                                Chrome.driver.Navigate().GoToUrl(Gomnet.urlSolicitaMaterial + numTrab);
+                                var pedidosLista = new SelectElement(Chrome.driver.FindElement(By.Id("dropNumPedido"))).Options.Count;
+                                //var opcoes = pedidosLista.Options.Count;
+
+                                for (var opcao = 1; opcao <= pedidosLista - 1; opcao++)
+                                {
+                                    var opcoes = new SelectElement(Chrome.driver.FindElement(By.Id("dropNumPedido")));
+                                    opcoes.SelectByIndex(opcao);
+                                    Chrome.driver.FindElement(By.Id("ImageButton_Enviar")).Click();
+                                    System.Threading.Thread.Sleep(2000);
+                                    Chrome.wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id("GridView_Consulta_ctl02_ImageButton_Enviar_SAP"))).Click();
+                                    System.Threading.Thread.Sleep(2000);
+                                    try
+                                    {
+                                        IAlert alert = Chrome.driver.SwitchTo().Alert();
+                                        alert.Accept();
+                                        System.Threading.Thread.Sleep(2000);
+                                        alert.Accept();
+                                        System.Threading.Thread.Sleep(2000);
+                                        try
+                                        {
+                                            string retornoPedido = Chrome.driver.FindElement(By.XPath("//*[@id='GridViewSap']/tbody/tr[2]/td[2]")).Text;
+                                            Console.WriteLine(sobFinal + " - 00" + opcao.ToString() + " " + retornoPedido + ".");
+                                        }
+                                        catch (NoSuchElementException)
+                                        {
+                                            Console.WriteLine(sobFinal + " - Pedido interno 00" + opcao.ToString() + " já existente.");
+                                        }
+                                    }
+                                    catch (NoAlertPresentException)
+                                    {
+                                        Console.WriteLine(sobFinal + " - Pedido interno 00" + opcao.ToString() + " - verificação necessária.");
+                                    }
+
+                                }
+                            }
+                        }
+                        catch (NoSuchElementException e)
+                        {
+                            Console.WriteLine(e);
+                        }
                     }
                 }
             }

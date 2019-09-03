@@ -15,16 +15,19 @@ namespace CmplConsole
     public partial class Form1 : Form
     {
         public static CheckBox Headless;
-        private BackgroundWorker segPlano;
+        private BackgroundWorker segPlano = new BackgroundWorker();
+        private BackgroundWorker geraPedidoSap = new BackgroundWorker();
 
         public Form1()
         {
             InitializeComponent();
 
-            segPlano = new BackgroundWorker();
-            segPlano.DoWork += new DoWorkEventHandler(sg_DoWork);
+            segPlano.DoWork += new DoWorkEventHandler(sg_VistoriaSob);
+            geraPedidoSap.DoWork += new DoWorkEventHandler(sg_GeraPedidoSap);
             segPlano.RunWorkerCompleted += new RunWorkerCompletedEventHandler(sg_RunWorkerCompleted);
+            geraPedidoSap.RunWorkerCompleted += new RunWorkerCompletedEventHandler(sg_RunWorkerCompleted);
             button1.Click += new EventHandler(Button1_Click);
+            button2.Click += new EventHandler(Button2_Click);
         }
         public static void Main ()
         {
@@ -52,9 +55,24 @@ namespace CmplConsole
             checkBox1.Enabled = true;
         }
 
-        private void sg_DoWork(object sender, DoWorkEventArgs e)
+        private void sg_VistoriaSob(object sender, DoWorkEventArgs e)
         {
             ProgramaSob.Vistoria();
+        }
+
+        private void sg_GeraPedidoSap(object sender, DoWorkEventArgs e)
+        {
+            ProgramaSob.GeraPedSAP();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            if (!geraPedidoSap.IsBusy)
+            {
+                geraPedidoSap.RunWorkerAsync();
+                button1.Enabled = false;
+                checkBox1.Enabled = false;
+            }
         }
     }
 }
