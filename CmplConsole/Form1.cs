@@ -54,7 +54,7 @@ namespace CmplConsole
 
         private void sg_DoWork(object sender, DoWorkEventArgs e)
         {
-            ProgramaSob.Execucao();
+            ProgramaSob.Vistoria();
         }
     }
 }

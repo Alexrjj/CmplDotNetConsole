@@ -13,18 +13,8 @@ namespace CmplConsole
     {
         public static void Vistoria()
         {
-            // TODO: Implementar programação da sob em estado de vistoria
-        }
-
-            public static void GeraPedSAP()
-        {
-            // TODO: Implementar criação de pedido de materiais no SAP
-            // TODO: Alterar quantidade de material solicitado de acordo com valores contidos numa planilha xls. Gerar erro caso a quantidade solicitada seja maior que orçada.
-        }
-
-        public static void Execucao()
-        {
             // TODO: Consultar a sob antes de programar, para saber se o status está como Fechado ou Certificado, evitando nova programação da mesma. (Gerar retorno e pular para próxima sob)
+
             Gomnet.Settings();
             Chrome.Initializer();
             Gomnet.Login();
@@ -42,7 +32,7 @@ namespace CmplConsole
                 //int count = pastas.Worksheets.Count; // Pega o valor total de pastas
 
                 if (pasta.Worksheets.Count > 0)
-                    {
+                {
                     //var pasta = pastas.Worksheets[p]; // Cada pasta assume o número atual em "count", que deve ser iniciado em 1
                     var pastaTrabalho = pasta.Worksheets.First();
                     var linhas = pastaTrabalho.Dimension.End.Row;
@@ -63,7 +53,7 @@ namespace CmplConsole
                         // Envia a variável apenas quando há dados na célula, do contrário, informa que não há mais Sobs.
                         try
                         {
-                            sob.SendKeys(sobFinal); 
+                            sob.SendKeys(sobFinal);
                         }
                         catch (NullReferenceException)
                         {
@@ -147,7 +137,7 @@ namespace CmplConsole
 
                         // Clica no botão "Adicionar Programação"
                         Chrome.driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_btnAdicionarProgramacao")).Click();
-                        
+
                         // Insere pelo menos um baremo/material e confirma a programação
                         foreach (var valor in BaremosModelo.baremo.Zip(BaremosModelo.qtd, Tuple.Create))
                         {
@@ -159,7 +149,7 @@ namespace CmplConsole
                                 {
                                     bar.Click();
                                     barQtd.Clear();
-                                    barQtd.SendKeys(valor.Item2);                                    
+                                    barQtd.SendKeys(valor.Item2);
                                     break;
                                 }
                             }
@@ -176,6 +166,13 @@ namespace CmplConsole
                 }
             }
         }
+
+        public static void GeraPedSAP()
+        {
+            // TODO: Implementar criação de pedido de materiais no SAP
+            // TODO: Alterar quantidade de material solicitado de acordo com valores contidos numa planilha xls. Gerar erro caso a quantidade solicitada seja maior que orçada.
+        }
+
         public static void Energizacao()
         {
             //TODO: Implementar energização de sobs concluídas
