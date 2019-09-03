@@ -11,6 +11,7 @@ namespace CmplConsole
 {
     public class Gomnet
     {
+        public static string urlProgObraVist;
         public static string urlBaseGomnet;
         public static string urlLogin;
         public static string urlConsulta;
@@ -36,6 +37,7 @@ namespace CmplConsole
             urlConsulta = urlBaseGomnet + "ConsultaObra.aspx";
             urlUpload = urlBaseGomnet + "Upload.aspx?numsob=";
             urlVincSup = urlBaseGomnet + "vistoria/vincularSupervisor.aspx";
+            urlProgObraVist = urlBaseGomnet + "ProgramarObra.aspx";
             urlAcompObra = urlBaseGomnet + "AcompanhamentoObras.aspx";
             folder = Path.GetDirectoryName(Application.ExecutablePath);
             InSobStatus = folder + @"\InSobStatus.txt";
