@@ -11,13 +11,13 @@ namespace CmplConsole
 {
     public class Gomnet
     {
+        public static string urlBaseGomnet;
         public static string urlLogin;
         public static string urlConsulta;
         public static string urlUpload;
         public static string urlVincSup;
         public static string urlAcompObra;
         public static string folder;
-        // public static Excel.Application excel;
         public static string login;
         public static string senha;
         public static string InSobStatus;
@@ -31,11 +31,12 @@ namespace CmplConsole
 
         public static void Settings()
         {
-            urlLogin = "http://gomnet.ampla.com/";
-            urlConsulta = "http://gomnet.ampla.com/ConsultaObra.aspx";
-            urlUpload = "http://gomnet.ampla.com/Upload.aspx?numsob=";
-            urlVincSup = "http://gomnet.ampla.com/vistoria/vincularSupervisor.aspx";
-            urlAcompObra = "http://gomnet.ampla.com/AcompanhamentoObras.aspx";
+            urlBaseGomnet = "http://146.133.16.45/gomnetrio/";
+            urlLogin = urlBaseGomnet;
+            urlConsulta = urlBaseGomnet + "ConsultaObra.aspx";
+            urlUpload = urlBaseGomnet + "Upload.aspx?numsob=";
+            urlVincSup = urlBaseGomnet + "vistoria/vincularSupervisor.aspx";
+            urlAcompObra = urlBaseGomnet + "AcompanhamentoObras.aspx";
             folder = Path.GetDirectoryName(Application.ExecutablePath);
             InSobStatus = folder + @"\InSobStatus.txt";
             InSobTrab = folder + @"\InSobTrab.txt";
@@ -98,7 +99,7 @@ namespace CmplConsole
                     }
                 case "7":
                     {
-                        ProgramaSob.Execucao();
+                        ProgramaSob.Vistoria();
                         break;
                     }
                 case "8":
