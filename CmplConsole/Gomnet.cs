@@ -23,6 +23,7 @@ namespace CmplConsole
         public static string urlUpload;
         public static string urlVincSup;
         public static string urlAcompObra;
+        public static string urlGomMobile;
         public static string folder;
         public static string login;
         public static string senha;
@@ -41,13 +42,14 @@ namespace CmplConsole
             arquivoXlsx = new FileInfo(@"Programação Filtrada.xlsx");
             pacoteTrabalho = new ExcelPackage(arquivoXlsx);
             pasta = pacoteTrabalho.Workbook;
-            urlBaseGomnet = "http://146.133.16.45/gomnetrio/";
+            urlBaseGomnet = "https://gomnet-rj.enel.com/";
             urlLogin = urlBaseGomnet;
             urlConsulta = urlBaseGomnet + "ConsultaObra.aspx";
             urlUpload = urlBaseGomnet + "Upload.aspx?numsob=";
             urlVincSup = urlBaseGomnet + "vistoria/vincularSupervisor.aspx";
             urlProgObraVist = urlBaseGomnet + "ProgramarObra.aspx";
             urlAcompObra = urlBaseGomnet + "AcompanhamentoObras.aspx";
+            urlGomMobile = urlBaseGomnet + "/Mobile/telaPrincipal.aspx";
             folder = Path.GetDirectoryName(Application.ExecutablePath);
             InSobStatus = folder + @"\InSobStatus.txt";
             InSobTrab = folder + @"\InSobTrab.txt";

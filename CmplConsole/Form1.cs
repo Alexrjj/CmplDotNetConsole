@@ -17,6 +17,8 @@ namespace CmplConsole
         public static CheckBox Headless;
         private BackgroundWorker segPlano = new BackgroundWorker();
         private BackgroundWorker geraPedidoSap = new BackgroundWorker();
+        private BackgroundWorker extraiStatus = new BackgroundWorker();
+
 
         public Form1()
         {
@@ -24,10 +26,15 @@ namespace CmplConsole
 
             segPlano.DoWork += new DoWorkEventHandler(sg_VistoriaSob);
             geraPedidoSap.DoWork += new DoWorkEventHandler(sg_GeraPedidoSap);
+            extraiStatus.DoWork += new DoWorkEventHandler(sg_ExtraiStatus);
             segPlano.RunWorkerCompleted += new RunWorkerCompletedEventHandler(sg_RunWorkerCompleted);
             geraPedidoSap.RunWorkerCompleted += new RunWorkerCompletedEventHandler(sg_RunWorkerCompleted);
+            extraiStatus.RunWorkerCompleted += new RunWorkerCompletedEventHandler(sg_RunWorkerCompleted);
+            
             button1.Click += new EventHandler(Button1_Click);
             button2.Click += new EventHandler(Button2_Click);
+            Button3.Click += new EventHandler(Button3_Click);
+
         }
         public static void Main ()
         {
@@ -65,6 +72,11 @@ namespace CmplConsole
             ProgramaSob.GeraPedSAP();
         }
 
+        private void sg_ExtraiStatus(object sender, DoWorkEventArgs e)
+        {
+            Extrair.SobStatus();
+        }
+
         private void Button2_Click(object sender, EventArgs e)
         {
             if (!geraPedidoSap.IsBusy)
@@ -72,6 +84,17 @@ namespace CmplConsole
                 geraPedidoSap.RunWorkerAsync();
                 button1.Enabled = false;
                 checkBox1.Enabled = false;
+            }
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            if (!extraiStatus.IsBusy)
+            {
+                extraiStatus.RunWorkerAsync();
+                button1.Enabled = false;
+                checkBox1.Enabled = false;
+                button2.Enabled = false;
             }
         }
     }
